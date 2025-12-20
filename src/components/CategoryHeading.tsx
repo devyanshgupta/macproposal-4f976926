@@ -3,18 +3,18 @@ import { motion } from "framer-motion";
 interface CategoryHeadingProps {
   category: string;
   isActive: boolean;
-  distance: number; // 0 = active, 1 = adjacent, 2 = further away, etc.
+  distance: number;
   onClick: () => void;
 }
 
 export const CategoryHeading = ({ category, isActive, distance, onClick }: CategoryHeadingProps) => {
-  // Calculate size based on distance from active heading
-  const getSize = () => {
-    if (distance === 0) return "text-4xl md:text-5xl lg:text-6xl";
-    if (distance === 1) return "text-2xl md:text-3xl";
-    if (distance === 2) return "text-xl md:text-2xl";
-    if (distance === 3) return "text-lg md:text-xl";
-    return "text-base md:text-lg";
+  // Calculate scale based on distance from active heading
+  const getScale = () => {
+    if (distance === 0) return 1;
+    if (distance === 1) return 0.65;
+    if (distance === 2) return 0.5;
+    if (distance === 3) return 0.42;
+    return 0.35;
   };
 
   const getOpacity = () => {
@@ -26,34 +26,42 @@ export const CategoryHeading = ({ category, isActive, distance, onClick }: Categ
   };
 
   const getFontWeight = () => {
-    if (distance === 0) return "font-bold";
-    if (distance === 1) return "font-semibold";
-    return "font-medium";
+    if (distance === 0) return 700;
+    if (distance === 1) return 600;
+    return 500;
   };
 
   return (
     <motion.button
       onClick={onClick}
-      className={`
-        block text-left transition-all duration-500 ease-out cursor-pointer
-        ${getSize()} ${getFontWeight()}
-        ${isActive ? "heading-active" : "heading-inactive"}
-        hover:opacity-100
-      `}
-      style={{ opacity: getOpacity() }}
-      whileHover={{ x: isActive ? 0 : 5 }}
-      transition={{ duration: 0.2 }}
+      className="block text-left cursor-pointer origin-left"
+      initial={false}
+      animate={{
+        scale: getScale(),
+        opacity: getOpacity(),
+        fontWeight: getFontWeight(),
+        color: isActive ? "hsl(var(--heading-active))" : "hsl(var(--heading-inactive))",
+      }}
+      transition={{
+        duration: 0.4,
+        ease: [0.25, 0.1, 0.25, 1], // Smooth cubic bezier
+      }}
+      whileHover={{ opacity: 1 }}
+      style={{ fontSize: "3rem" }}
     >
       <span className="flex items-center gap-3">
-        {isActive && (
-          <motion.span
-            layoutId="activeIndicator"
-            className="w-8 h-1 bg-primary rounded-full"
-            initial={{ opacity: 0, width: 0 }}
-            animate={{ opacity: 1, width: 32 }}
-            transition={{ duration: 0.3 }}
-          />
-        )}
+        <motion.span
+          className="w-8 h-1 bg-primary rounded-full origin-left"
+          initial={false}
+          animate={{
+            scaleX: isActive ? 1 : 0,
+            opacity: isActive ? 1 : 0,
+          }}
+          transition={{
+            duration: 0.3,
+            ease: "easeOut",
+          }}
+        />
         <span>{category}</span>
       </span>
     </motion.button>
