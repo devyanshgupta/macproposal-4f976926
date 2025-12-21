@@ -22,7 +22,7 @@ export const ServiceSelector = () => {
     const containerTop = container.scrollTop;
 
     // Anchor a bit below the top padding so the active category feels stable.
-    const anchor = containerTop + 24;
+    const anchor = containerTop + 96; // Increased anchor to match scroll-pt-24
 
     let closestCategory = 0;
     let closestDistance = Infinity;
@@ -50,22 +50,21 @@ export const ServiceSelector = () => {
 
   const scrollToCategory = (index: number) => {
     const ref = categoryRefs.current[index];
-    const container = contentRef.current;
-    if (!ref || !container) return;
+    if (!ref) return;
 
     // Immediately mark active and block scroll handler during animation
     setActiveCategory(index);
     isScrollingRef.current = true;
 
-    container.scrollTo({
-      top: ref.offsetTop,
+    ref.scrollIntoView({
       behavior: "smooth",
+      block: "start",
     });
 
     // Re-enable scroll handler after animation completes
     setTimeout(() => {
       isScrollingRef.current = false;
-    }, 500);
+    }, 800); // Increased timeout for potentially longer scrolls
   };
 
   const toggleService = (id: string) => {
@@ -133,9 +132,6 @@ export const ServiceSelector = () => {
         </div>
       </header>
 
-      {/* Client Information Section */}
-      <ClientInfo />
-
       <div className="max-w-7xl mx-auto flex">
         {/* Left Panel - Categories */}
         <aside className="w-72 lg:w-80 shrink-0 sticky top-20 h-[calc(100vh-120px)] hidden md:flex flex-col justify-center -ml-4 pl-0 pr-4 py-4 overflow-hidden">
@@ -164,8 +160,11 @@ export const ServiceSelector = () => {
         {/* Middle & Right Panel - Services with Prices */}
         <main 
           ref={contentRef}
-          className="flex-1 overflow-y-auto h-[calc(100vh-80px)] scrollbar-hide px-6 lg:px-12 py-8"
+          className="flex-1 overflow-y-auto h-[calc(100vh-80px)] scrollbar-hide px-6 lg:px-12 py-8 scroll-pt-24 pb-[70vh]"
         >
+          {/* Client Information Section */}
+          <ClientInfo />
+
           {categories.map((category, categoryIndex) => {
             const services = getServicesByCategory(category);
             
@@ -173,7 +172,7 @@ export const ServiceSelector = () => {
               <div
                 key={category}
                 ref={el => categoryRefs.current[categoryIndex] = el}
-                className="mb-16 last:mb-32"
+                className="mb-16"
               >
                 {/* Mobile category header */}
                 <motion.h2 
@@ -200,6 +199,7 @@ export const ServiceSelector = () => {
                           id={service.id}
                           service={service.service}
                           price={service.price}
+                          billingCycle={service.billingCycle}
                           isSelected={selectedServices.has(service.id)}
                           onToggle={() => toggleService(service.id)}
                         />

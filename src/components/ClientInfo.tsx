@@ -8,6 +8,7 @@ export const ClientInfo = () => {
       className="bg-background border-b border-border"
     >
       <div className="max-w-7xl mx-auto px-6 py-6">
+        <h2 className="text-2xl font-bold text-foreground mb-6">Client Details</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="flex flex-col">
             <label htmlFor="client-name" className="text-sm font-medium text-foreground/70 mb-2">

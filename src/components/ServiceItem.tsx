@@ -1,15 +1,13 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { Check } from "lucide-react";
+import { ServiceItem as ServiceItemData } from "../data/servicesData";
 
-interface ServiceItemProps {
-  id: string;
-  service: string;
-  price: number;
+type ServiceItemProps = ServiceItemData & {
   isSelected: boolean;
   onToggle: () => void;
-}
+};
 
-export const ServiceItem = ({ service, price, isSelected, onToggle }: ServiceItemProps) => {
+export const ServiceItem = ({ service, price, billingCycle, isSelected, onToggle }: ServiceItemProps) => {
   return (
     <motion.div
       initial={{ opacity: 0, y: 10 }}
@@ -59,25 +57,29 @@ export const ServiceItem = ({ service, price, isSelected, onToggle }: ServiceIte
       <div className="w-28 text-right shrink-0">
         <AnimatePresence mode="wait">
           {isSelected ? (
-            <motion.span
-              key="selected"
+            <motion.div
+              key="selected-price"
               initial={{ opacity: 0, x: -10 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: 10 }}
-              className="text-price-selected font-semibold text-lg"
             >
-              + ${price.toLocaleString()}
-            </motion.span>
+              <span className="text-price-selected font-semibold text-lg">
+                + ${price.toLocaleString()}
+              </span>
+              <p className="text-xs text-muted-foreground -mt-1">{billingCycle}</p>
+            </motion.div>
           ) : (
-            <motion.span
-              key="unselected"
+            <motion.div
+              key="unselected-price"
               initial={{ opacity: 0, x: -10 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: 10 }}
-              className="text-muted-foreground font-medium"
             >
-              ${price.toLocaleString()}
-            </motion.span>
+              <span className="text-muted-foreground font-medium">
+                ${price.toLocaleString()}
+              </span>
+              <p className="text-xs text-muted-foreground/80">{billingCycle}</p>
+            </motion.div>
           )}
         </AnimatePresence>
       </div>

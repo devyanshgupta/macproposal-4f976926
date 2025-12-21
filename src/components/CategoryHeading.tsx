@@ -27,16 +27,14 @@ export const CategoryHeading = ({
     if (distance === 0) return 1;
     if (distance === 1) return 0.65;
     if (distance === 2) return 0.5;
-    if (distance === 3) return 0.42;
-    return 0.35;
+    return 0.42; // for 3+ away
   };
 
   const getOpacity = () => {
     if (distance === 0) return 1;
-    if (distance === 1) return 0.7;
-    if (distance === 2) return 0.5;
-    if (distance === 3) return 0.35;
-    return 0.2;
+    if (distance === 1) return 0.8;
+    if (distance === 2) return 0.65;
+    return 0.5; // for 3+ away
   };
 
   const getFontWeight = () => {
@@ -71,7 +69,7 @@ export const CategoryHeading = ({
       whileHover={{ opacity: 1 }}
       style={{ fontSize: "clamp(1.2rem, 2vw, 2rem)", willChange: "transform" }}
     >
-      <span className="flex items-start gap-2.5">
+      <span className="flex items-center gap-2.5">
         <motion.span
           className="w-5 h-0.5 bg-primary rounded-full origin-left shrink-0"
           initial={false}
@@ -83,7 +81,6 @@ export const CategoryHeading = ({
             duration: 0.3,
             ease: "easeOut",
           }}
-          style={{ marginTop: '0.7em' }}
         />
         <span 
           className="relative shrink-0"
@@ -91,7 +88,6 @@ export const CategoryHeading = ({
             e.stopPropagation();
             onCheckboxChange(e);
           }}
-          style={{ marginTop: '0.4em' }}
         >
           <input
             ref={checkboxRef}
