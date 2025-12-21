@@ -61,7 +61,4 @@ export const servicesData: ServiceItem[] = [
   { id: "ana-4", category: "Analytics", service: "Conversion optimization", price: 3000, billingCycle: "Monthly" },
 ];
 
-export const categories = [...new Set(servicesData.map(s => s.category))];
-
-export const getServicesByCategory = (category: string) => 
-  servicesData.filter(s => s.category === category);
+export const initialCategories = [...new Set(servicesData.map(s => s.category))];
