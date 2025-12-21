@@ -92,13 +92,6 @@ export const ServiceSelector = () => {
       setAllCategories(prev => [...prev, service.category]);
     }
     setSelectedServices(prev => new Set(prev).add(service.id));
-    // Scroll to the new category if it was just added
-    setTimeout(() => {
-      const newCategoryIndex = allCategories.indexOf(service.category);
-      if (newCategoryIndex !== -1) {
-        scrollToCategory(newCategoryIndex);
-      }
-    }, 100);
   };
 
   const getCategorySelectionState = (category: string) => {
