@@ -9,6 +9,7 @@ import { categories, getServicesByCategory, ServiceItem as ServiceItemType } fro
 export const ServiceSelector = () => {
   const [activeCategory, setActiveCategory] = useState(0);
   const [selectedServices, setSelectedServices] = useState<Set<string>>(new Set());
+  const [customPrices, setCustomPrices] = useState<Record<string, number>>({});
   const contentRef = useRef<HTMLDivElement>(null);
   const categoryRefs = useRef<(HTMLDivElement | null)[]>([]);
   const isScrollingRef = useRef(false);
@@ -72,11 +73,20 @@ export const ServiceSelector = () => {
       const next = new Set(prev);
       if (next.has(id)) {
         next.delete(id);
+        setCustomPrices(prevPrices => {
+          const newPrices = { ...prevPrices };
+          delete newPrices[id];
+          return newPrices;
+        });
       } else {
         next.add(id);
       }
       return next;
     });
+  };
+
+  const handleCustomPriceChange = (id: string, price: number) => {
+    setCustomPrices(prev => ({ ...prev, [id]: price }));
   };
 
   const getCategorySelectionState = (category: string) => {
@@ -116,7 +126,7 @@ export const ServiceSelector = () => {
     categories.forEach(category => {
       getServicesByCategory(category).forEach(service => {
         if (selectedServices.has(service.id)) {
-          total += service.price;
+          total += customPrices[service.id] ?? service.price;
         }
       });
     });
@@ -211,10 +221,12 @@ export const ServiceSelector = () => {
                         <ServiceItem
                           id={service.id}
                           service={service.service}
-                          price={service.price}
+                          price={customPrices[service.id] ?? service.price}
+                          originalPrice={service.price}
                           billingCycle={service.billingCycle}
                           isSelected={selectedServices.has(service.id)}
                           onToggle={() => toggleService(service.id)}
+                          onCustomPriceChange={(newPrice) => handleCustomPriceChange(service.id, newPrice)}
                         />
                       </motion.div>
                     ))}
