@@ -1,73 +1,69 @@
-# Welcome to your Lovable project
+# Service Proposal Maker for Mayur & Company
 
-## Project info
+This is a web application designed to streamline the creation of service proposals for Mayur & Company Chartered Accountants. It allows for the dynamic configuration of services from various categories, calculates the total cost in real-time, and provides a clean interface for generating proposals.
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+## Features
 
-## How can I edit this code?
+- **Interactive Service Selection:** Browse services across multiple categories like Web Development, UI/UX Design, and Marketing.
+- **Dynamic Proposal Building:** Select or deselect services with a single click. The application supports partially selected categories (indeterminate state).
+- **Real-Time Cost Calculation:** The total estimated cost updates instantly as services are added or removed.
+- **Client Information Form:** A dedicated section to input client details for the proposal.
+- **Custom Theming:** Styled with a professional blue and green color scheme inspired by the ICAI branding.
+- **Responsive Design:** A clean and modern UI that works on both desktop and mobile devices.
 
-There are several ways of editing your application.
+## Technology Stack
 
-**Use Lovable**
+- **Frontend:**
+  - [React](https://reactjs.org/)
+  - [TypeScript](https://www.typescriptlang.org/)
+  - [Vite](https://vitejs.dev/) - Next-generation frontend tooling
+  - [Tailwind CSS](https://tailwindcss.com/) - A utility-first CSS framework
+- **UI & Animations:**
+  - [shadcn/ui](https://ui.shadcn.com/) - A collection of re-usable components.
+  - [Lucide React](https://lucide.dev/) - A beautiful and consistent icon toolkit.
+  - [Framer Motion](https://www.framer.com/motion/) - A production-ready motion library for React.
+- **Backend (Optional):**
+  - The application can be connected to a Python backend using FastAPI to load service data dynamically.
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+## Getting Started
 
-Changes made via Lovable will be committed automatically to this repo.
+Follow these instructions to set up and run the project on your local machine for development and testing purposes.
 
-**Use your preferred IDE**
+### Prerequisites
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+- [Node.js](https://nodejs.org/) (v18 or later recommended)
+- [npm](https://www.npmjs.com/) (comes with Node.js)
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+### Installation & Setup
 
-Follow these steps:
+1. **Clone the repository:**
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+   ```sh
+   git clone https://github.com/devyanshgupta/MAC-Proposal-Generator.git
+   cd https://github.com/devyanshgupta/MAC-Proposal-Generator.git
+   ```
+2. **Install dependencies:**
+   This command will install all the necessary packages defined in `package.json`.
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+   ```sh
+   npm install
+   ```
+3. **Run the development server:**
+   This command starts the Vite development server, typically on `http://localhost:5173`. The app will automatically reload when you make changes to the code.
 
-# Step 3: Install the necessary dependencies.
-npm i
+   ```sh
+   npm run dev
+   ```
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
+## Available Scripts
 
-**Edit a file directly in GitHub**
+In the project directory, you can run the following commands:
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
-
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+- `npm run dev` or `npm run start`:
+  Runs the app in development mode.
+- `npm run build`:
+  Builds the app for production to the `dist` folder. It correctly bundles React in production mode and optimizes the build for the best performance.
+- `npm run lint`:
+  Lints the codebase using ESLint to find and fix problems in the code.
+- `npm run preview`:
+  Serves the production build from the `dist` folder for a local preview.
