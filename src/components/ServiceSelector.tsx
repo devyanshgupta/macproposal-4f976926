@@ -127,8 +127,21 @@ export const ServiceSelector = () => {
     <div className="min-h-screen bg-background pb-24">
       {/* Header */}
       <header className="sticky top-0 z-40 bg-background/80 backdrop-blur-xl border-b border-border">
-        <div className="max-w-7xl mx-auto px-6 py-4">
-          <h1 className="text-lg font-semibold text-foreground">Service Configurator</h1>
+        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+          {/* Left Side: Logo and Company Name */}
+          <div className="flex items-center gap-3">
+            <img src="/favicon.ico" alt="Company Logo" className="h-8 w-8" />
+            <span className="font-bold text-foreground text-lg">
+              Mayur & Company Chartered Accountants
+            </span>
+          </div>
+
+          {/* Right Side: App Name */}
+          <div>
+            <span className="text-sm font-medium text-muted-foreground">
+              Service Proposal Maker
+            </span>
+          </div>
         </div>
       </header>
 

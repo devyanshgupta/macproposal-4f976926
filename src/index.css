@@ -13,7 +13,7 @@
     --popover: 0 0% 100%;
     --popover-foreground: 220 25% 10%;
 
-    --primary: 24 95% 53%;
+    --primary: 207 96% 22%; /* New Blue */
     --primary-foreground: 0 0% 100%;
 
     --secondary: 220 15% 92%;
@@ -22,7 +22,7 @@
     --muted: 220 15% 94%;
     --muted-foreground: 220 10% 50%;
 
-    --accent: 24 95% 53%;
+    --accent: 131 88% 34%; /* New Green */
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84% 60%;
@@ -30,17 +30,17 @@
 
     --border: 220 15% 88%;
     --input: 220 15% 88%;
-    --ring: 24 95% 53%;
+    --ring: 207 96% 22%; /* New Blue */
 
     --radius: 0.75rem;
 
-    --heading-active: 220 25% 10%;
+    --heading-active: 131 88% 34%; /* New Green */
     --heading-inactive: 220 10% 60%;
-    --price-selected: 142 70% 45%;
+    --price-selected: 131 88% 34%; /* New Green */
     --price-unselected: 220 10% 50%;
-    --check-bg: 24 95% 53%;
-    --total-gradient-start: 24 95% 53%;
-    --total-gradient-end: 32 95% 58%;
+    --check-bg: 207 96% 22%; /* New Blue */
+    --total-gradient-start: 207 96% 22%; /* New Blue */
+    --total-gradient-end: 207 96% 22%; /* New Blue */
   }
 
   .dark {
@@ -53,7 +53,7 @@
     --popover: 220 25% 10%;
     --popover-foreground: 220 15% 95%;
 
-    --primary: 24 95% 55%;
+    --primary: 207 90% 50%; /* New Blue Dark */
     --primary-foreground: 220 25% 6%;
 
     --secondary: 220 20% 15%;
@@ -62,7 +62,7 @@
     --muted: 220 20% 18%;
     --muted-foreground: 220 10% 55%;
 
-    --accent: 24 95% 55%;
+    --accent: 131 70% 55%; /* New Green Dark */
     --accent-foreground: 220 25% 6%;
 
     --destructive: 0 70% 50%;
@@ -70,15 +70,15 @@
 
     --border: 220 20% 18%;
     --input: 220 20% 18%;
-    --ring: 24 95% 55%;
+    --ring: 207 90% 50%; /* New Blue Dark */
 
-    --heading-active: 220 15% 98%;
+    --heading-active: 131 70% 55%; /* New Green Dark */
     --heading-inactive: 220 10% 40%;
-    --price-selected: 142 70% 50%;
+    --price-selected: 131 70% 55%; /* New Green Dark */
     --price-unselected: 220 10% 45%;
-    --check-bg: 24 95% 55%;
-    --total-gradient-start: 24 95% 55%;
-    --total-gradient-end: 32 95% 60%;
+    --check-bg: 207 90% 50%; /* New Blue Dark */
+    --total-gradient-start: 207 90% 50%; /* New Blue Dark */
+    --total-gradient-end: 207 90% 50%; /* New Blue Dark */
   }
 }
 

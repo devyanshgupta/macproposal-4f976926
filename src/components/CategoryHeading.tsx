@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { useRef, useEffect } from "react";
 import { Minus } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 interface CategoryHeadingProps {
   category: string;
@@ -22,7 +23,7 @@ export const CategoryHeading = ({
   onCheckboxChange 
 }: CategoryHeadingProps) => {
   const checkboxRef = useRef<HTMLInputElement>(null);
-  // Calculate scale based on distance from active heading
+  
   const getScale = () => {
     if (distance === 0) return 1;
     if (distance === 1) return 0.65;
@@ -43,7 +44,7 @@ export const CategoryHeading = ({
     return 500;
   };
 
-  // Set indeterminate state on checkbox
+  // Set indeterminate state on checkbox for accessibility and styling hooks
   useEffect(() => {
     if (checkboxRef.current) {
       checkboxRef.current.indeterminate = indeterminate;
@@ -70,31 +71,38 @@ export const CategoryHeading = ({
       style={{ fontSize: "clamp(1.2rem, 2vw, 2rem)", willChange: "transform" }}
     >
       <span className="flex items-center gap-2.5">
-        <motion.span
-          className="w-5 h-0.5 bg-primary rounded-full origin-left shrink-0"
-          initial={false}
-          animate={{
-            scaleX: isActive ? 1 : 0,
-            opacity: isActive ? 1 : 0,
-          }}
-          transition={{
-            duration: 0.3,
-            ease: "easeOut",
-          }}
-        />
+        <div className="h-4 flex items-center">
+          <motion.span
+            className="w-5 h-0.5 bg-primary rounded-full origin-left shrink-0"
+            initial={false}
+            animate={{
+              scaleX: isActive ? 1 : 0,
+              opacity: isActive ? 1 : 0,
+            }}
+            transition={{
+              duration: 0.3,
+              ease: "easeOut",
+            }}
+          />
+        </div>
         <span 
           className="relative shrink-0"
           onClick={(e) => {
             e.stopPropagation();
             onCheckboxChange(e);
           }}
-        >
+        > 
           <input
             ref={checkboxRef}
             type="checkbox"
             checked={checked}
             onChange={() => {}}
-            className="w-4 h-4 rounded border-2 border-primary/40 cursor-pointer accent-primary appearance-none checked:bg-primary checked:border-primary hover:border-primary/60 transition-colors relative"
+            className={cn(
+              "w-4 h-4 rounded border-2 cursor-pointer accent-primary appearance-none transition-colors relative",
+              (checked || indeterminate)
+                ? "bg-primary border-primary"
+                : "border-primary/40 hover:border-primary/60"
+            )}
             style={{
               backgroundImage: checked && !indeterminate 
                 ? 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 16 16\' fill=\'white\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cpath d=\'M12.207 4.793a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0l-2-2a1 1 0 011.414-1.414L6.5 9.086l4.293-4.293a1 1 0 011.414 0z\'/%3E%3C/svg%3E")'
@@ -106,7 +114,7 @@ export const CategoryHeading = ({
           />
           {indeterminate && (
             <Minus 
-              className="absolute inset-0 m-auto w-2.5 h-2.5 text-primary pointer-events-none" 
+              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-2.5 h-2.5 text-primary-foreground pointer-events-none" 
               strokeWidth={3}
             />
           )}
@@ -116,3 +124,5 @@ export const CategoryHeading = ({
     </motion.button>
   );
 };
+
+
