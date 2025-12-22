@@ -5,18 +5,35 @@ import { ServiceItem } from "./ServiceItem";
 import { TotalBar } from "./TotalBar";
 import { ClientInfo } from "./ClientInfo";
 import { CustomServiceForm } from "./CustomServiceForm";
-import { servicesData, initialCategories, ServiceItem as ServiceItemType } from "@/data/servicesData";
+import { ServiceItem as ServiceItemType } from "@/data/servicesData";
 
 export const ServiceSelector = () => {
   const [activeCategory, setActiveCategory] = useState(0);
   const [selectedServices, setSelectedServices] = useState<Set<string>>(new Set());
   const [customPrices, setCustomPrices] = useState<Record<string, number>>({});
-  const [allServices, setAllServices] = useState<ServiceItemType[]>(servicesData);
-  const [allCategories, setAllCategories] = useState<string[]>(initialCategories);
+  const [allServices, setAllServices] = useState<ServiceItemType[]>([]);
+  const [allCategories, setAllCategories] = useState<string[]>([]);
 
   const contentRef = useRef<HTMLDivElement>(null);
   const categoryRefs = useRef<(HTMLDivElement | null)[]>([]);
   const isScrollingRef = useRef(false);
+
+  useEffect(() => {
+    const fetchServices = async () => {
+      try {
+        const response = await fetch('/api/services');
+        const data = await response.json();
+        setAllServices(data);
+        const categories = [...new Set(data.map((s: ServiceItemType) => s.category))];
+        setAllCategories(categories as string[]);
+      } catch (error) {
+        console.error("Error fetching services:", error);
+      }
+    };
+
+    fetchServices();
+  }, []);
+
 
   const getServicesByCategory = (category: string) => 
     allServices.filter(s => s.category === category);
