@@ -3,5 +3,6 @@ export interface ServiceItem {
   category: string;
   service: string;
   price: number;
-  billingCycle: 'One-off' | 'Monthly' | 'Yearly' | 'Quarterly';
+  billingCycle: string;
+  scopeOfWork?: string;
 }

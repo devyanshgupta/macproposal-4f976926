@@ -30,6 +30,7 @@ export const ServiceSelector = () => {
   });
   const [isGenerating, setIsGenerating] = useState(false);
   const [isPreparing, setIsPreparing] = useState(false);
+  const [termsAndConditions, setTermsAndConditions] = useState<string[]>([]);
 
   const contentRef = useRef<HTMLDivElement>(null);
   const categoryRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -50,7 +51,19 @@ export const ServiceSelector = () => {
       }
     };
 
+    const fetchTermsAndConditions = async () => {
+      try {
+        const response = await fetch('/terms-and-conditions.txt');
+        const text = await response.text();
+        const terms = text.split('\n\n').filter(t => t.trim());
+        setTermsAndConditions(terms);
+      } catch (error) {
+        console.error("Error fetching terms and conditions:", error);
+      }
+    };
+
     fetchServices();
+    fetchTermsAndConditions();
   }, []);
 
   const getServicesByCategory = (category: string) =>
@@ -219,7 +232,7 @@ export const ServiceSelector = () => {
       }
 
       const normalized: ProposalResponse = await response.json();
-      const blob = await pdf(<ProposalDocument data={normalized} />).toBlob();
+      const blob = await pdf(<ProposalDocument data={normalized} termsAndConditions={termsAndConditions} />).toBlob();
       const url = URL.createObjectURL(blob);
       const link = document.createElement("a");
       link.href = url;

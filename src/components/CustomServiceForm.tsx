@@ -43,11 +43,11 @@ export const CustomServiceForm = ({ categories, billingCycles, onAddService }: C
     }
 
     const newService: ServiceItem = {
-      id: `custom-${Date.now()}`, // Add a unique ID for custom services
+      id: `custom-${Date.now()}`,
       service,
       scopeOfWork,
       price: Number(price),
-      billingCycle: finalBillingCycle as ServiceItem['billingCycle'],
+      billingCycle: finalBillingCycle,
       category: finalCategory,
     };
 
