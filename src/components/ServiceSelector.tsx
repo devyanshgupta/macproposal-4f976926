@@ -8,8 +8,8 @@ import { ClientInfo } from "./ClientInfo";
 import { CustomServiceForm } from "./CustomServiceForm";
 import { SearchBar } from "./SearchBar";
 import { ServiceItem as ServiceItemType } from "@/data/servicesData";
-import { ProposalDocument } from "@/pdf/ProposalDocument";
-import { ProposalPayload, ProposalResponse } from "@/types/proposal";
+import { ProposalDocument } from "@/pdf/EngagementDocument";
+import { ProposalPayload, ProposalResponse, AdvancedTerm } from "@/types/engagement";
 
 export const ServiceSelector = () => {
   const [activeCategory, setActiveCategory] = useState(0);
@@ -21,7 +21,8 @@ export const ServiceSelector = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [clientInfo, setClientInfo] = useState({
     name: "",
-    gstin: "",
+    contactNo: "",
+    email: "",
     address: "",
     CIN: "",
     preparedBy: "Mayur & Company Chartered Accountants",
@@ -31,6 +32,7 @@ export const ServiceSelector = () => {
   const [isGenerating, setIsGenerating] = useState(false);
   const [isPreparing, setIsPreparing] = useState(false);
   const [termsAndConditions, setTermsAndConditions] = useState<string[]>([]);
+  const [advancedTermsAndConditions, setAdvancedTermsAndConditions] = useState<AdvancedTerm[]>([]);
 
   const contentRef = useRef<HTMLDivElement>(null);
   const categoryRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -64,6 +66,36 @@ export const ServiceSelector = () => {
 
     fetchServices();
     fetchTermsAndConditions();
+    const fetchAdvancedTermsAndConditions = async () => {
+      try {
+        const response = await fetch('/advanced-terms-and-conditions.txt');
+        const text = await response.text();
+        const lines = text.split('\n').filter(line => line.trim() !== '');
+        
+        const structuredTerms: AdvancedTerm[] = [];
+        let currentTerm: AdvancedTerm | null = null;
+
+        for (const line of lines) {
+            const match = line.match(/^(\d+\.\s+.*)/);
+            if (match) {
+                if (currentTerm) {
+                    structuredTerms.push(currentTerm);
+                }
+                currentTerm = { heading: match[1], points: [] };
+            } else if (currentTerm) {
+                currentTerm.points.push(line);
+            }
+        }
+        if (currentTerm) {
+            structuredTerms.push(currentTerm);
+        }
+
+        setAdvancedTermsAndConditions(structuredTerms);
+      } catch (error) {
+        console.error("Error fetching advanced terms and conditions:", error);
+      }
+    };
+    fetchAdvancedTermsAndConditions();
   }, []);
 
   const getServicesByCategory = (category: string) =>
@@ -200,7 +232,8 @@ export const ServiceSelector = () => {
     return {
       client: {
         name: clientInfo.name,
-        gstin: clientInfo.gstin,
+        contactNo: clientInfo.contactNo,
+        email: clientInfo.email,
         address: clientInfo.address,
         CIN: clientInfo.CIN,
       },
@@ -242,7 +275,7 @@ export const ServiceSelector = () => {
       }
 
       const normalized: ProposalResponse = await response.json();
-      const blob = await pdf(<ProposalDocument data={normalized} termsAndConditions={termsAndConditions} />).toBlob();
+      const blob = await pdf(<ProposalDocument data={normalized} termsAndConditions={termsAndConditions} advancedTermsAndConditions={advancedTermsAndConditions} />).toBlob();
       const url = URL.createObjectURL(blob);
       const link = document.createElement("a");
       link.href = url;
@@ -268,7 +301,7 @@ export const ServiceSelector = () => {
       const response = await fetch("/api/proposal_letter/details", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ clientName: clientInfo.name }),
+        body: JSON.stringify(clientInfo),
       });
 
       if (!response.ok) {
@@ -345,7 +378,8 @@ export const ServiceSelector = () => {
         >
           <ClientInfo
             clientName={clientInfo.name}
-            gstin={clientInfo.gstin}
+            contactNo={clientInfo.contactNo}
+            email={clientInfo.email}
             address={clientInfo.address}
             CIN={clientInfo.CIN}
             preparedBy={clientInfo.preparedBy}

@@ -1,5 +1,5 @@
 import { Document, Page, Text, View, StyleSheet, Font } from "@react-pdf/renderer";
-import { ProposalResponse } from "@/types/proposal";
+import { ProposalResponse, AdvancedTerm } from "@/types/engagement";
 
 Font.register({
   family: 'HK Grotesk',
@@ -133,8 +133,13 @@ const styles = StyleSheet.create({
     marginBottom: 8,
     paddingLeft: 10,
   },
-  signatureSection: {
+  signatureContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     marginTop: 40,
+  },
+  signatureBlock: {
+      width: '45%',
   },
   signatureLine: {
     marginBottom: 4,
@@ -159,6 +164,33 @@ const styles = StyleSheet.create({
     color: "#6b7280",
     fontFamily: "Helvetica",
   },
+  advancedTermsPage: {
+    padding: 50,
+    fontSize: 10,
+    fontFamily: "HK Grotesk",
+    color: "#1f2937",
+    lineHeight: 1.6,
+  },
+  advancedTermsTitle: {
+    fontSize: 14,
+    fontWeight: "bold",
+    marginBottom: 20,
+    textAlign: "center",
+    textDecoration: "underline",
+  },
+  advancedTermBlock: {
+    marginBottom: 12,
+  },
+  advancedTermHeading: {
+    fontSize: 11,
+    fontWeight: "bold",
+    marginBottom: 8,
+  },
+  advancedTermPointer: {
+    marginBottom: 6,
+    textAlign: "justify",
+    paddingLeft: 10,
+  },
 });
 
 const formatCurrency = (value: number) => `₹${value.toLocaleString("en-IN")}`;
@@ -166,25 +198,26 @@ const formatCurrency = (value: number) => `₹${value.toLocaleString("en-IN")}`;
 type ProposalDocumentProps = {
   data: ProposalResponse;
   termsAndConditions?: string[];
+  advancedTermsAndConditions?: AdvancedTerm[];
 };
 
-export const ProposalDocument = ({ data, termsAndConditions }: ProposalDocumentProps) => {
+export const ProposalDocument = ({ data, termsAndConditions, advancedTermsAndConditions }: ProposalDocumentProps) => {
   const services = data.services ?? [];
   const clientName = data.client?.name || "Client Name";
+  const clientEmail = data.client?.email || "";
+  const clientPhone = data.client?.contactNo || "";
   const cin = data.client?.CIN?.trim() || "";
-  const address = data.client?.address || "Address Not Provided";
+  const address = data.client?.address || "";
   const proposalDate = data.proposal?.date || new Date().toLocaleDateString("en-IN", {
     day: "2-digit",
-    month: "long", 
+    month: "long",
     year: "numeric"
   });
-  const message = data.proposal?.message || 
+  const message = data.proposal?.message ||
     "We are pleased to submit our proposal for providing professional services to your esteemed organization. Please find below the scope of work along with professional fees and terms and conditions.";
 
-  // Determine if this is for an individual (no CIN) or a company
   const isIndividual = !cin;
 
-  // Group services by category
   const servicesByCategory = services.reduce((acc, service) => {
     const category = service.category;
     if (!acc[category]) {
@@ -194,7 +227,6 @@ export const ProposalDocument = ({ data, termsAndConditions }: ProposalDocumentP
     return acc;
   }, {} as Record<string, typeof services>);
 
-  // Default terms if not provided
   const defaultTerms = [
     "GST as per applicable rate will be extra. Presently GST rate is 18%.",
     "All out of pocket expenses shall be reimbursed on actual basis. E.g. ROC Fees, Income Tax, Travel and Conveyance for performing auditing at your office etc.",
@@ -207,42 +239,36 @@ export const ProposalDocument = ({ data, termsAndConditions }: ProposalDocumentP
   return (
     <Document>
       <Page size="A4" style={styles.page}>
-        {/* Date - Right aligned */}
         <Text style={styles.dateRight}>{proposalDate}</Text>
 
-        {/* Address Block - Left aligned */}
         <View style={styles.addressBlock}>
           <Text>To,</Text>
           {!isIndividual && <Text style={styles.bold}>The Board of Directors</Text>}
           <Text style={styles.bold}>{clientName}</Text>
+          {clientEmail && <Text>Email: {clientEmail}</Text>}
+          {clientPhone && <Text>Phone: {clientPhone}</Text>}
           {!isIndividual && <Text>CIN - {cin}</Text>}
-          <Text>Address: {address}</Text>
+          {address && <Text>Address: {address}</Text>}
         </View>
 
-        {/* Subject Line */}
         <Text style={styles.subject}>
           Sub.: Scope of Work Offered along with Professional Fees and Terms and Conditions of appointment
         </Text>
 
-        {/* Salutation */}
         <Text style={styles.salutation}>Sir,</Text>
 
-        {/* Message */}
         <Text style={styles.message}>{message}</Text>
 
-        {/* Services Tables by Category */}
         {Object.entries(servicesByCategory).map(([category, categoryServices]) => (
           <View key={category}>
             <Text style={styles.categoryTitle}>{category}</Text>
             <View style={styles.table}>
-              {/* Table Header */}
               <View style={styles.tableHeaderRow}>
                 <Text style={styles.snoHeader}>S.No.</Text>
                 <Text style={styles.scopeHeader}>Scope of Work</Text>
                 <Text style={styles.priceHeader}>Professional Fees (in INR)</Text>
               </View>
 
-              {/* Table Rows */}
               {categoryServices.map((svc, idx) => {
                 const hasCustomPrice = svc.discountedPrice != null && svc.discountedPrice !== svc.price;
                 return (
@@ -273,10 +299,8 @@ export const ProposalDocument = ({ data, termsAndConditions }: ProposalDocumentP
           </View>
         ))}
 
-        {/* Terms and Conditions */}
         <View style={styles.termsSection} wrap={false}>
-          <Text style={styles.termsTitle}>Other Terms and Conditions:</Text>
-          
+          <Text style={styles.termsTitle}>General Terms and Conditions:</Text>
           {terms.map((term, idx) => (
             <Text key={idx} style={styles.termItem}>• {term}</Text>
           ))}
@@ -286,21 +310,52 @@ export const ProposalDocument = ({ data, termsAndConditions }: ProposalDocumentP
           Please send us signed and stamped copy of this letter as a token of your acceptance.
         </Text>
 
-        {/* Signature Section */}
-        <View style={styles.signatureSection} wrap={false}>
-          <Text style={[styles.signatureLine, styles.bold]}>CA MAYUR GUPTA, FCA</Text>
-          <Text style={styles.signatureLine}>PROPRIETOR</Text>
-          <Text style={[styles.signatureLine, styles.bold]}>FOR MAYUR AND COMPANY</Text>
-          <Text style={styles.signatureLine}>CHARTERED ACCOUNTANTS</Text>
-          <Text style={styles.signatureLine}>DATE – {proposalDate}</Text>
-          <Text style={styles.signatureLine}>PLACE: DELHI</Text>
-          <Text style={styles.signatureLine}>M.NO.503036</Text>
-          <Text style={styles.signatureLine}>FRN-021448N</Text>
-        </View>
+        <View style={styles.signatureContainer} wrap={false}>
+            {/* Left Block - CA Mayur Gupta */}
+            <View style={styles.signatureBlock}>
+                <View style={{ borderTop: '1px solid #333', width: '100%', marginTop: 80, marginBottom: 10 }} />
+                <Text style={[styles.signatureLine, styles.bold]}>CA MAYUR GUPTA, FCA</Text>
+                <Text style={styles.signatureLine}>PROPRIETOR</Text>
+                <Text style={[styles.signatureLine, styles.bold]}>FOR MAYUR AND COMPANY</Text>
+                <Text style={styles.signatureLine}>CHARTERED ACCOUNTANTS</Text>
+                <Text style={styles.signatureLine}>DATE – {proposalDate}</Text>
+                <Text style={styles.signatureLine}>PLACE: DELHI</Text>
+                <Text style={styles.signatureLine}>M.NO.503036</Text>
+                <Text style={styles.signatureLine}>FRN-021448N</Text>
+            </View>
 
-        {/* Enclosure */}
+            {/* Right Block - Client */}
+            <View style={styles.signatureBlock}>
+                <View style={{ borderTop: '1px solid #333', width: '100%', marginTop: 80, marginBottom: 10 }} />
+                {!isIndividual && <Text style={[styles.signatureLine, styles.bold]}>For and on behalf of</Text>}
+                {!isIndividual && <Text style={[styles.signatureLine, styles.bold]}>The Board of Directors</Text>}
+                <Text style={[styles.signatureLine, styles.bold]}>{clientName}</Text>
+                {!isIndividual && <Text style={styles.signatureLine}>Authorized Signatory</Text>}
+                {!isIndividual && <Text style={styles.signatureLine}>CIN - {cin}</Text>}
+                <Text style={styles.signatureLine}>Date – {proposalDate}</Text>
+                {address && <Text style={styles.signatureLine}>Address: {address}</Text>}
+                {clientEmail && <Text style={styles.signatureLine}>Email: {clientEmail}</Text>}
+                {clientPhone && <Text style={styles.signatureLine}>Phone: {clientPhone}</Text>}
+            </View>
+        </View>
         <Text style={styles.enclosure}>Enc.: a/a</Text>
       </Page>
+
+      {advancedTermsAndConditions && advancedTermsAndConditions.length > 0 && (
+        <Page size="A4" style={styles.advancedTermsPage}>
+          <Text style={styles.advancedTermsTitle}>Terms and Conditions</Text>
+          {advancedTermsAndConditions.map((term, index) => (
+            <View key={index} style={styles.advancedTermBlock}>
+              <Text style={styles.advancedTermHeading}>{term.heading}</Text>
+              {term.points.map((point, pointIndex) => (
+                <Text key={pointIndex} style={styles.advancedTermPointer}>
+                  • {point}
+                </Text>
+              ))}
+            </View>
+          ))}
+        </Page>
+      )}
     </Document>
   );
 };

@@ -2,7 +2,8 @@ import { motion } from "framer-motion";
 
 interface ClientInfoProps {
   clientName: string;
-  gstin: string;
+  contactNo: string;
+  email: string;
   address: string;
   CIN: string;
   preparedBy: string;
@@ -13,7 +14,8 @@ interface ClientInfoProps {
 
 export const ClientInfo = ({
   clientName,
-  gstin,
+  contactNo,
+  email,
   address,
   CIN,
   preparedBy,
@@ -45,15 +47,28 @@ export const ClientInfo = ({
           </div>
           
           <div className="flex flex-col">
-            <label htmlFor="client-gstin" className="text-sm font-medium text-foreground/70 mb-2">
-              Client GSTIN
+            <label htmlFor="client-contact-no" className="text-sm font-medium text-foreground/70 mb-2">
+              Contact No.
             </label>
             <input
-              id="client-gstin"
+              id="client-contact-no"
               type="text"
-              placeholder="Enter GSTIN"
-              value={gstin}
-              onChange={(e) => onFieldChange("gstin", e.target.value)}
+              placeholder="Enter Contact No."
+              value={contactNo}
+              onChange={(e) => onFieldChange("contactNo", e.target.value)}
+              className="px-4 py-2 border border-border rounded-lg bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"
+            />
+          </div>
+          <div className="flex flex-col">
+            <label htmlFor="client-email" className="text-sm font-medium text-foreground/70 mb-2">
+              Email
+            </label>
+            <input
+              id="client-email"
+              type="email"
+              placeholder="Enter Email"
+              value={email}
+              onChange={(e) => onFieldChange("email", e.target.value)}
               className="px-4 py-2 border border-border rounded-lg bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"
             />
           </div>

@@ -30,9 +30,10 @@ class ProposalService(BaseModel):
 
 class ClientInfo(BaseModel):
     name: Optional[str] = None
-    gstin: Optional[str] = None
+    contactNo: Optional[str] = None
+    email: Optional[str] = None
     address: Optional[str] = None
-    din: Optional[str] = None
+    CIN: Optional[str] = None
 
 
 class ProposalMeta(BaseModel):
@@ -48,8 +49,6 @@ class ProposalPayload(BaseModel):
     services: List[ProposalService]
 
 
-class ProposalLetterRequest(BaseModel):
-    clientName: str
 
 
 app = FastAPI()
@@ -140,11 +139,11 @@ def cleanup_temp_file(file_path: str):
 
 
 @app.post("/api/proposal_letter/details")
-def prepare_proposal_letter(request: ProposalLetterRequest, background_tasks: BackgroundTasks):
+def prepare_proposal_letter(request: ClientInfo, background_tasks: BackgroundTasks):
     """
     Generate a proposal letter PDF by replacing text in the sample PDF with client name.
     """
-    if not request.clientName:
+    if not request.name:
         raise ValueError("Client name is required")
     
     # Create a temporary file for the output PDF
@@ -155,9 +154,11 @@ def prepare_proposal_letter(request: ProposalLetterRequest, background_tasks: Ba
     try:
         # Use normalize_path to get the input PDF path
         input_path = normalize_path("public/Proposal_Cover_Sample.pdf")
+
+        client_details = request.model_dump()
         
         # Generate the PDF with client name
-        find_and_replace_text(input_path, output_path, request.clientName)
+        find_and_replace_text(input_path, output_path, client_details)
         
         # Schedule cleanup after response is sent
         background_tasks.add_task(cleanup_temp_file, output_path)
@@ -166,7 +167,7 @@ def prepare_proposal_letter(request: ProposalLetterRequest, background_tasks: Ba
         return FileResponse(
             output_path,
             media_type="application/pdf",
-            filename=f"proposal-{request.clientName.replace(' ', '_')}.pdf"
+            filename=f"proposal-{request.name.replace(' ', '_')}.pdf"
         )
     except Exception as e:
         # Clean up temp file on error

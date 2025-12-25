@@ -11,7 +11,8 @@ export interface ProposalService {
 
 export interface ClientInfo {
   name?: string;
-  gstin?: string;
+  contactNo?: string;
+  email?: string;
   address?: string;
   CIN?: string;
 }
@@ -34,5 +35,10 @@ export interface ProposalResponse extends ProposalPayload {
     total: number;
     count: number;
   };
+}
+
+export interface AdvancedTerm {
+  heading: string;
+  points: string[];
 }
 
