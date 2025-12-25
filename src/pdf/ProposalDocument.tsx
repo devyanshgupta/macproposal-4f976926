@@ -161,7 +161,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const formatCurrency = (value: number) => `${value.toLocaleString("en-IN")}`;
+const formatCurrency = (value: number) => `₹${value.toLocaleString("en-IN")}`;
 
 type ProposalDocumentProps = {
   data: ProposalResponse;

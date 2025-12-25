@@ -74,7 +74,7 @@ export const TotalBar = ({ total, selectedCount, onGeneratePdf, onPrepareProposa
                 exit={{ opacity: 0, scale: 0.8 }}
                 className="text-primary-foreground text-2xl md:text-3xl font-bold"
               >
-                ${total.toLocaleString()}
+                ₹{total.toLocaleString()}
               </motion.span>
             </AnimatePresence>
           </div>

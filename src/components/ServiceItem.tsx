@@ -88,7 +88,7 @@ export const ServiceItem = ({ service, price, originalPrice, billingCycle, isSel
               onClick={(e) => e.stopPropagation()}
             >
               <div className="relative">
-                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-price-selected font-semibold text-lg">+ $</span>
+                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-price-selected font-semibold text-lg">+ ₹</span>
                 <Input
                   type="number"
                   value={price}
@@ -107,7 +107,7 @@ export const ServiceItem = ({ service, price, originalPrice, billingCycle, isSel
               className="flex-1"
             >
               <span className="text-muted-foreground font-medium">
-                ${price.toLocaleString()}
+                ₹{price.toLocaleString()}
               </span>
               <p className="text-xs text-muted-foreground/80">{billingCycle}</p>
             </motion.div>
