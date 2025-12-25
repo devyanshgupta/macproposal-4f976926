@@ -101,24 +101,35 @@ const styles = StyleSheet.create({
     width: "40%",
     fontSize: 10,
     textAlign: "right",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "flex-end",
+  },
+  priceRow: {
     flexDirection: "row",
-    justifyContent: "flex-end",
     alignItems: "center",
+    justifyContent: "flex-end",
   },
   originalPrice: {
-    fontSize: 8,
+    fontSize: 9,
     color: "#9ca3af",
     textDecoration: "line-through",
     marginRight: 6,
   },
   currentPrice: {
-    fontSize: 11,
+    fontSize: 13,
     color: "#16a34a",
     fontWeight: "bold",
   },
   normalPrice: {
-    fontSize: 10,
+    fontSize: 13,
     color: "#374151",
+    fontWeight: "bold",
+  },
+  billingCycle: {
+    fontSize: 8,
+    color: "#6b7280",
+    marginTop: 2,
   },
   termsSection: {
     marginTop: 24,
@@ -283,13 +294,18 @@ export const ProposalDocument = ({ data, termsAndConditions, advancedTermsAndCon
                       )}
                     </View>
                     <View style={styles.priceCell}>
-                      {hasCustomPrice ? (
-                        <>
-                          <Text style={styles.originalPrice}>{formatCurrency(svc.price)}</Text>
-                          <Text style={styles.currentPrice}>{formatCurrency(svc.discountedPrice!)}</Text>
-                        </>
-                      ) : (
-                        <Text style={styles.normalPrice}>{formatCurrency(svc.price)}</Text>
+                      <View style={styles.priceRow}>
+                        {hasCustomPrice ? (
+                          <>
+                            <Text style={styles.originalPrice}>{formatCurrency(svc.price)}</Text>
+                            <Text style={styles.currentPrice}>{formatCurrency(svc.discountedPrice!)}</Text>
+                          </>
+                        ) : (
+                          <Text style={styles.normalPrice}>{formatCurrency(svc.price)}</Text>
+                        )}
+                      </View>
+                      {svc.billingCycle && (
+                        <Text style={styles.billingCycle}>({svc.billingCycle})</Text>
                       )}
                     </View>
                   </View>
