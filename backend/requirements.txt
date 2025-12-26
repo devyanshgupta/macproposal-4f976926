@@ -1,5 +1,6 @@
-fastapi
-uvicorn
-pandas
-pydantic
-PyMuPDF
+fastapi>=0.109.0
+uvicorn>=0.27.0
+pandas>=2.2.0
+pymupdf>=1.23.0
+pydantic>=2.6.0
+python-multipart>=0.0.9
