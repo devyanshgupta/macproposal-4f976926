@@ -153,7 +153,7 @@ def prepare_proposal_letter(request: ClientInfo, background_tasks: BackgroundTas
     
     try:
         # Use normalize_path to get the input PDF path
-        input_path = normalize_path("public/Proposal_Cover_Sample.pdf")
+        input_path = normalize_path("public/Proposal_Cover_initials.pdf")
 
         client_details = request.model_dump()
         

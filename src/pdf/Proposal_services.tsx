@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
     fontStyle: 'normal',
     color: "#1f2937",
     letterSpacing: 0,
-    backgroundColor:"#EDEDED",
+    backgroundColor: "#EDEDED",
     lineHeight: 1.5,
   },
   headerContainer: {
@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "flex-start",
     paddingVertical: 12,
-    paddingLeft:10,
+    paddingLeft: 10,
     borderBottomWidth: 1.5,
     borderBottomColor: "#000",
     //marginLeft: -16,
@@ -152,6 +152,52 @@ const styles = StyleSheet.create({
     letterSpacing: -0.5,
     color: "#000",
   },
+  notesSection: {
+    marginTop: 20,
+    padding: 10,
+    marginLeft: 80,
+    marginRight: 0,
+    textAlign: "right",
+  },
+  notesHeading: {
+    fontSize: 28.5714285712,
+    fontFamily: "Red Hat Display",
+    fontWeight: "bold",
+    marginBottom: 25,
+    color: "#244333",
+  },
+  notesParagraph: {
+    fontSize: 10,
+    color: "#000",
+    lineHeight: 1.4,
+    marginBottom: 4,
+    letterSpacing: -0.5,
+    textAlign: "right",
+  },
+  bulletRow: {
+    flexDirection: 'row-reverse',
+    marginBottom: 4,
+    letterSpacing: -0.5,
+    justifyContent: 'flex-start',
+  },
+  bullet: {
+    width: 10,
+    fontSize: 12,
+    textAlign: 'right',
+    letterSpacing: -0.5,
+    marginLeft: 5,
+  },
+  bulletContent: {
+    flex: 1,
+    fontSize: 12,
+    lineHeight: 1.4,
+    letterSpacing: -0.5,
+    textAlign: 'right',
+  },
+  boldText: {
+    fontWeight: 'bold',
+    letterSpacing: -0.5,
+  },
 });
 
 const formatCurrency = (value: number) => value.toLocaleString("en-IN");
@@ -161,9 +207,49 @@ const SERVICES_PER_PAGE = 8; // Adjust based on your layout needs
 
 interface ProposalServicesDocumentProps {
   services: ProposalService[];
+  para?: string;
 }
 
-export const ProposalServicesDocument = ({ services }: ProposalServicesDocumentProps) => {
+const renderFormattedText = (text: string) => {
+  const lines = text.split('\n');
+
+  return lines.map((line, lineIndex) => {
+    const trimmedLine = line.trim();
+    const isBullet = trimmedLine.startsWith('-') || trimmedLine.startsWith('*') || trimmedLine.startsWith('•');
+
+    let content = isBullet ? trimmedLine.substring(1).trim() : trimmedLine;
+
+    // Simple bold parser for **text**
+    const parts = content.split(/(\*\*.*?\*\*)/g);
+    const renderedParts = parts.map((part, partIndex) => {
+      if (part.startsWith('**') && part.endsWith('**')) {
+        return (
+          <Text key={partIndex} style={styles.boldText} hyphenationCallback={(word) => [word]}>
+            {part.slice(2, -2)}
+          </Text>
+        );
+      }
+      return <Text key={partIndex} hyphenationCallback={(word) => [word]}>{part}</Text>;
+    });
+
+    if (isBullet) {
+      return (
+        <View key={lineIndex} style={styles.bulletRow}>
+          <Text style={styles.bullet}>•</Text>
+          <Text style={styles.bulletContent}>{renderedParts}</Text>
+        </View>
+      );
+    }
+
+    return (
+      <Text key={lineIndex} style={styles.notesParagraph} hyphenationCallback={(word) => [word]}>
+        {renderedParts}
+      </Text>
+    );
+  });
+};
+
+export const ProposalServicesDocument = ({ services, para }: ProposalServicesDocumentProps) => {
   // Split services into pages
   const pages: ProposalService[][] = [];
   for (let i = 0; i < services.length; i += SERVICES_PER_PAGE) {
@@ -210,7 +296,7 @@ export const ProposalServicesDocument = ({ services }: ProposalServicesDocumentP
                     key={service.id}
                     style={[
                       styles.serviceRow,
-                      index == pageServices.length-1 && {
+                      index - 1 == pageServices.length - 1 && {//make it index instead of index-1 for removing border at last service
                         borderBottomWidth: 0,
                       },
                     ]}
@@ -232,8 +318,17 @@ export const ProposalServicesDocument = ({ services }: ProposalServicesDocumentP
               })}
             </View>
 
-            
+
           </View>
+          {/* Notes from CA */}
+          {pageIndex === pages.length - 1 && para && ( // Only show on the last page of services if para exists
+            <View style={styles.notesSection}>
+              <Text style={styles.notesHeading}>Notes from the CA</Text>
+              <View>
+                {renderFormattedText(para)}
+              </View>
+            </View>
+          )}
         </Page>
       ))}
     </Document>

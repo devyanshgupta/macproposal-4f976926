@@ -7,6 +7,7 @@ export interface ProposalService {
   scopeOfWork?: string;
   discountedPrice?: number | null;
   finalPrice?: number;
+  notesfromca?: string;
 }
 
 export interface ClientInfo {
@@ -22,6 +23,7 @@ export interface ProposalMeta {
   preparedBy?: string;
   date?: string;
   message?: string;
+  para?: string; // Added new field for paragraph
 }
 
 export interface ProposalPayload {

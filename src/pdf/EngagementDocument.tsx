@@ -226,6 +226,7 @@ export const ProposalDocument = ({ data, termsAndConditions, advancedTermsAndCon
   });
   const message = data.proposal?.message ||
     "We are pleased to submit our proposal for providing professional services to your esteemed organization. Please find below the scope of work along with professional fees and terms and conditions.";
+  const para = data.proposal?.para || ""; // Retrieve the new paragraph field
 
   const isIndividual = !cin;
 
@@ -269,6 +270,7 @@ export const ProposalDocument = ({ data, termsAndConditions, advancedTermsAndCon
         <Text style={styles.salutation}>Sir,</Text>
 
         <Text style={styles.message}>{message}</Text>
+        {para && <Text style={styles.message}>{para}</Text>} {/* Display the new paragraph if it exists */}
 
         {Object.entries(servicesByCategory).map(([category, categoryServices]) => (
           <View key={category}>

@@ -29,6 +29,7 @@ export const ServiceSelector = () => {
     preparedBy: "Mayur & Company Chartered Accountants",
     message: "Pursuant to our discussions, Mayur and Company Chartered Accountants, hereby propose to provide the following professional services to your company:",
     date: new Date().toISOString().slice(0, 10),
+    para: "", // Added new field for paragraph
   });
   const [isGenerating, setIsGenerating] = useState(false);
   const [isPreparing, setIsPreparing] = useState(false);
@@ -73,23 +74,23 @@ export const ServiceSelector = () => {
         const response = await fetch('/advanced-terms-and-conditions.txt');
         const text = await response.text();
         const lines = text.split('\n').filter(line => line.trim() !== '');
-        
+
         const structuredTerms: AdvancedTerm[] = [];
         let currentTerm: AdvancedTerm | null = null;
 
         for (const line of lines) {
-            const match = line.match(/^(\d+\.\s+.*)/);
-            if (match) {
-                if (currentTerm) {
-                    structuredTerms.push(currentTerm);
-                }
-                currentTerm = { heading: match[1], points: [] };
-            } else if (currentTerm) {
-                currentTerm.points.push(line);
+          const match = line.match(/^(\d+\.\s+.*)/);
+          if (match) {
+            if (currentTerm) {
+              structuredTerms.push(currentTerm);
             }
+            currentTerm = { heading: match[1], points: [] };
+          } else if (currentTerm) {
+            currentTerm.points.push(line);
+          }
         }
         if (currentTerm) {
-            structuredTerms.push(currentTerm);
+          structuredTerms.push(currentTerm);
         }
 
         setAdvancedTermsAndConditions(structuredTerms);
@@ -103,7 +104,12 @@ export const ServiceSelector = () => {
   const getServicesByCategory = (category: string) =>
     allServices.filter(s =>
       s.category === category &&
-      s.service.toLowerCase().includes(searchTerm.toLowerCase())
+      (
+        s.service.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        (s.scopeOfWork && s.scopeOfWork.toLowerCase().includes(searchTerm.toLowerCase())) ||
+        s.price.toString().includes(searchTerm) ||
+        (s.billingCycle && s.billingCycle.toLowerCase().includes(searchTerm.toLowerCase()))
+      )
     );
 
   const handleScroll = useCallback(() => {
@@ -147,7 +153,7 @@ export const ServiceSelector = () => {
     const headerHeight = 80;
     const elementTop = ref.offsetTop;
     const scrollContainer = contentRef.current;
-    
+
     // Scroll to position accounting for header, with a small additional offset for spacing
     const offset = headerHeight + 16; // 16px additional spacing
     scrollContainer.scrollTo({
@@ -195,7 +201,7 @@ export const ServiceSelector = () => {
   const getCategorySelectionState = (category: string) => {
     const services = getServicesByCategory(category);
     const selectedCount = services.filter(s => selectedServices.has(s.id)).length;
-    
+
     if (selectedCount === 0) return { checked: false, indeterminate: false };
     if (selectedCount === services.length && services.length > 0) return { checked: true, indeterminate: false };
     return { checked: false, indeterminate: true };
@@ -204,7 +210,7 @@ export const ServiceSelector = () => {
   const toggleCategory = (category: string) => {
     const services = getServicesByCategory(category);
     const { checked } = getCategorySelectionState(category);
-    
+
     setSelectedServices(prev => {
       const next = new Set(prev);
       if (checked) {
@@ -344,7 +350,7 @@ export const ServiceSelector = () => {
         discountedPrice: customPrices[svc.id] ?? svc.price,
       }));
 
-      const blob = await pdf(<ProposalServicesDocument services={services} />).toBlob();
+      const blob = await pdf(<ProposalServicesDocument services={services} para={clientInfo.para} />).toBlob();
       const url = URL.createObjectURL(blob);
       const link = document.createElement("a");
       link.href = url;
@@ -359,7 +365,7 @@ export const ServiceSelector = () => {
     }
   };
 
-  const filteredCategories = allCategories.filter(category => 
+  const filteredCategories = allCategories.filter(category =>
     getServicesByCategory(category).length > 0
   );
 
@@ -408,7 +414,7 @@ export const ServiceSelector = () => {
           </nav>
         </aside>
 
-        <main 
+        <main
           ref={contentRef}
           className="flex-1 overflow-y-auto h-[calc(100vh-80px)] scrollbar-hide px-6 lg:px-12 py-8 scroll-pt-24 pb-24"
         >
@@ -421,6 +427,7 @@ export const ServiceSelector = () => {
             preparedBy={clientInfo.preparedBy}
             proposalDate={clientInfo.date}
             greeting={clientInfo.message}
+            para={clientInfo.para} // Pass the new paragraph field
             onFieldChange={handleClientFieldChange}
           />
           <div className="md:hidden mb-8">
@@ -430,14 +437,14 @@ export const ServiceSelector = () => {
           {filteredCategories.map((category, categoryIndex) => {
             const services = getServicesByCategory(category);
             if (services.length === 0) return null;
-            
+
             return (
               <div
                 key={category}
                 ref={el => categoryRefs.current[allCategories.indexOf(category)] = el}
                 className="mb-16 scroll-mt-24"
               >
-                <motion.h2 
+                <motion.h2
                   className="md:hidden text-2xl font-bold text-foreground mb-6 sticky top-0 bg-background/95 backdrop-blur-sm py-3 -mx-6 px-6 border-b border-border"
                   initial={{ opacity: 0 }}
                   whileInView={{ opacity: 1 }}
@@ -475,17 +482,17 @@ export const ServiceSelector = () => {
               </div>
             );
           })}
-          
-          <CustomServiceForm 
-            categories={allCategories} 
+
+          <CustomServiceForm
+            categories={allCategories}
             billingCycles={allBillingCycles}
-            onAddService={addService} 
+            onAddService={addService}
           />
         </main>
       </div>
 
-      <TotalBar 
-        total={calculateTotal()} 
+      <TotalBar
+        total={calculateTotal()}
         selectedCount={selectedServices.size}
         onGeneratePdf={handleGeneratePdf}
         onPrepareProposal={handlePrepareProposal}

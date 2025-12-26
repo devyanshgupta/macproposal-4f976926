@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { Bold, List } from "lucide-react";
 
 interface ClientInfoProps {
   clientName: string;
@@ -9,6 +10,7 @@ interface ClientInfoProps {
   preparedBy: string;
   proposalDate: string;
   greeting: string;
+  para: string; // Added new field for paragraph
   onFieldChange: (field: string, value: string) => void;
 }
 
@@ -21,6 +23,7 @@ export const ClientInfo = ({
   preparedBy,
   proposalDate,
   greeting,
+  para, // Added new field for paragraph
   onFieldChange,
 }: ClientInfoProps) => {
   return (
@@ -45,7 +48,7 @@ export const ClientInfo = ({
               className="px-4 py-2 border border-border rounded-lg bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"
             />
           </div>
-          
+
           <div className="flex flex-col">
             <label htmlFor="client-contact-no" className="text-sm font-medium text-foreground/70 mb-2">
               Contact No.
@@ -72,7 +75,7 @@ export const ClientInfo = ({
               className="px-4 py-2 border border-border rounded-lg bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"
             />
           </div>
-          
+
           <div className="flex flex-col">
             <label htmlFor="client-address" className="text-sm font-medium text-foreground/70 mb-2">
               Client Address
@@ -128,9 +131,73 @@ export const ClientInfo = ({
             />
           </div>
 
+          {/* New paragraph field */}
+          <div className="flex flex-col md:col-span-3">
+            <div className="flex items-center justify-between mb-2">
+              <label htmlFor="para" className="text-sm font-medium text-foreground/70">
+                Notes from CA (To be placed in the Proposal)
+              </label>
+              <div className="flex gap-2">
+                <button
+                  type="button"
+                  onClick={() => {
+                    const textarea = document.getElementById('para') as HTMLTextAreaElement;
+                    const start = textarea.selectionStart;
+                    const end = textarea.selectionEnd;
+                    const text = textarea.value;
+                    const before = text.substring(0, start);
+                    const selected = text.substring(start, end);
+                    const after = text.substring(end);
+                    const newValue = `${before}**${selected}**${after}`;
+                    onFieldChange("para", newValue);
+                    setTimeout(() => {
+                      textarea.focus();
+                      textarea.setSelectionRange(start + 2, end + 2);
+                    }, 0);
+                  }}
+                  className="p-1.5 hover:bg-accent rounded-md transition-colors text-foreground/70 hover:text-foreground"
+                  title="Bold"
+                >
+                  <Bold size={16} />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    const textarea = document.getElementById('para') as HTMLTextAreaElement;
+                    const start = textarea.selectionStart;
+                    const text = textarea.value;
+                    const before = text.substring(0, start);
+                    const after = text.substring(start);
+                    const isNewline = start === 0 || text[start - 1] === '\n';
+                    const newValue = `${before}${isNewline ? '' : '\n'}- ${after}`;
+                    onFieldChange("para", newValue);
+                    setTimeout(() => {
+                      textarea.focus();
+                      textarea.setSelectionRange(start + (isNewline ? 2 : 3), start + (isNewline ? 2 : 3));
+                    }, 0);
+                  }}
+                  className="p-1.5 hover:bg-accent rounded-md transition-colors text-foreground/70 hover:text-foreground"
+                  title="Bullet Point"
+                >
+                  <List size={16} />
+                </button>
+              </div>
+            </div>
+            <textarea
+              id="para"
+              placeholder="Add notes from the CA (use **text** for bold, - for bullets)"
+              value={para}
+              onChange={(e) => onFieldChange("para", e.target.value)}
+              className="px-4 py-3 border border-border rounded-lg bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all min-h-[96px]"
+            />
+            <p className="mt-1 text-xs text-muted-foreground">
+              Tip: Use <strong>**bold**</strong> for emphasis and <strong>- list</strong> for bullet points.
+            </p>
+          </div>
+
           <div className="flex flex-col md:col-span-3">
             <label htmlFor="greeting" className="text-sm font-medium text-foreground/70 mb-2">
-              Greeting / Message
+              Message (in the final engagement letter just before services section)
             </label>
             <textarea
               id="greeting"

@@ -14,26 +14,9 @@ def find_and_replace_text(input_pdf_path, output_pdf_path, client_details):
             x0, y1 = inst.x0, inst.y1 + 5
             
             # Create a list of text lines to insert
-            text_lines = []
             name = client_details.get("name")
-            if name:
-                text_lines.append(name)
-            
-            address = client_details.get("address")
-            if address:
-                text_lines.append(address)
-
-            email = client_details.get("email")
-            if email:
-                text_lines.append(f"Email: {email}")
-
-            contactNo = client_details.get("contactNo")
-            if contactNo:
-                text_lines.append(f"Phone: {contactNo}")
-
             # Insert the text lines
-            for i, line in enumerate(text_lines):
-                page.insert_textbox(fitz.Rect(x0, y1 - 3 + (i * 18), x0 + 342, y1 + (i * 18) + 18), line, fontsize=12, fontname="F0", align=fitz.TEXT_ALIGN_LEFT)
+            page.insert_textbox(fitz.Rect(x0, y1 - 3, x0 + 342, y1 + 18), name, fontsize=12, fontname="F0", align=fitz.TEXT_ALIGN_LEFT)
 
     doc.subset_fonts()
     doc.save(output_pdf_path, garbage=4, deflate=True, clean=True)
