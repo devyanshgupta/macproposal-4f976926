@@ -9,6 +9,14 @@ Font.register({
   ]
 });
 
+Font.register({
+  family: 'Open Sauce',
+  fonts: [
+    { src: '/fonts/open-sauce/OpenSauceOne-Bold.ttf', fontWeight: 'bold' },
+    { src: '/fonts/open-sauce/OpenSauceTwo-Regular.ttf', fontWeight: 'normal' },
+  ]
+});
+
 const styles = StyleSheet.create({
   page: {
     padding: 50,
@@ -150,7 +158,7 @@ const styles = StyleSheet.create({
     marginTop: 40,
   },
   signatureBlock: {
-      width: '45%',
+    width: '45%',
   },
   signatureLine: {
     marginBottom: 4,
@@ -196,11 +204,17 @@ const styles = StyleSheet.create({
     fontSize: 11,
     fontWeight: "bold",
     marginBottom: 8,
+    fontFamily: "Open Sauce",
+    color: "#000",
+    letterSpacing: -0.5,
   },
   advancedTermPointer: {
     marginBottom: 6,
     textAlign: "justify",
     paddingLeft: 10,
+    fontFamily: "Open Sauce",
+    color: "#000",
+    letterSpacing: 0,
   },
 });
 
@@ -329,32 +343,32 @@ export const ProposalDocument = ({ data, termsAndConditions, advancedTermsAndCon
         </Text>
 
         <View style={styles.signatureContainer} wrap={false}>
-            {/* Left Block - CA Mayur Gupta */}
-            <View style={styles.signatureBlock}>
-                <View style={{ borderTop: '1px solid #333', width: '100%', marginTop: 80, marginBottom: 10 }} />
-                <Text style={[styles.signatureLine, styles.bold]}>CA MAYUR GUPTA, FCA</Text>
-                <Text style={styles.signatureLine}>PROPRIETOR</Text>
-                <Text style={[styles.signatureLine, styles.bold]}>FOR MAYUR AND COMPANY</Text>
-                <Text style={styles.signatureLine}>CHARTERED ACCOUNTANTS</Text>
-                <Text style={styles.signatureLine}>DATE – {proposalDate}</Text>
-                <Text style={styles.signatureLine}>PLACE: DELHI</Text>
-                <Text style={styles.signatureLine}>M.NO.503036</Text>
-                <Text style={styles.signatureLine}>FRN-021448N</Text>
-            </View>
+          {/* Left Block - CA Mayur Gupta */}
+          <View style={styles.signatureBlock}>
+            <View style={{ borderTop: '1px solid #333', width: '100%', marginTop: 80, marginBottom: 10 }} />
+            <Text style={[styles.signatureLine, styles.bold]}>CA MAYUR GUPTA, FCA</Text>
+            <Text style={styles.signatureLine}>PROPRIETOR</Text>
+            <Text style={[styles.signatureLine, styles.bold]}>FOR MAYUR AND COMPANY</Text>
+            <Text style={styles.signatureLine}>CHARTERED ACCOUNTANTS</Text>
+            <Text style={styles.signatureLine}>DATE – {proposalDate}</Text>
+            <Text style={styles.signatureLine}>PLACE: DELHI</Text>
+            <Text style={styles.signatureLine}>M.NO.503036</Text>
+            <Text style={styles.signatureLine}>FRN-021448N</Text>
+          </View>
 
-            {/* Right Block - Client */}
-            <View style={styles.signatureBlock}>
-                <View style={{ borderTop: '1px solid #333', width: '100%', marginTop: 80, marginBottom: 10 }} />
-                {!isIndividual && <Text style={[styles.signatureLine, styles.bold]}>For and on behalf of</Text>}
-                {!isIndividual && <Text style={[styles.signatureLine, styles.bold]}>The Board of Directors</Text>}
-                <Text style={[styles.signatureLine, styles.bold]}>{clientName}</Text>
-                {!isIndividual && <Text style={styles.signatureLine}>Authorized Signatory</Text>}
-                {!isIndividual && <Text style={styles.signatureLine}>CIN - {cin}</Text>}
-                <Text style={styles.signatureLine}>Date – {proposalDate}</Text>
-                {address && <Text style={styles.signatureLine}>Address: {address}</Text>}
-                {clientEmail && <Text style={styles.signatureLine}>Email: {clientEmail}</Text>}
-                {clientPhone && <Text style={styles.signatureLine}>Phone: {clientPhone}</Text>}
-            </View>
+          {/* Right Block - Client */}
+          <View style={styles.signatureBlock}>
+            <View style={{ borderTop: '1px solid #333', width: '100%', marginTop: 80, marginBottom: 10 }} />
+            {!isIndividual && <Text style={[styles.signatureLine, styles.bold]}>For and on behalf of</Text>}
+            {!isIndividual && <Text style={[styles.signatureLine, styles.bold]}>The Board of Directors</Text>}
+            <Text style={[styles.signatureLine, styles.bold]}>{clientName}</Text>
+            {!isIndividual && <Text style={styles.signatureLine}>Authorized Signatory</Text>}
+            {!isIndividual && <Text style={styles.signatureLine}>CIN - {cin}</Text>}
+            <Text style={styles.signatureLine}>Date – {proposalDate}</Text>
+            {address && <Text style={styles.signatureLine}>Address: {address}</Text>}
+            {clientEmail && <Text style={styles.signatureLine}>Email: {clientEmail}</Text>}
+            {clientPhone && <Text style={styles.signatureLine}>Phone: {clientPhone}</Text>}
+          </View>
         </View>
         <Text style={styles.enclosure}>Enc.: a/a</Text>
       </Page>
@@ -367,7 +381,7 @@ export const ProposalDocument = ({ data, termsAndConditions, advancedTermsAndCon
               <Text style={styles.advancedTermHeading}>{term.heading}</Text>
               {term.points.map((point, pointIndex) => (
                 <Text key={pointIndex} style={styles.advancedTermPointer}>
-                  • {point}
+                  {term.points.length === 1 ? point : `• ${point}`}
                 </Text>
               ))}
             </View>
