@@ -202,6 +202,14 @@ const styles = StyleSheet.create({
 
 const formatCurrency = (value: number) => value.toLocaleString("en-IN");
 
+const sanitizeText = (text: string): string => {
+  if (!text) return text;
+  return text
+    .replace(/[\u2018\u2019]/g, "'") // Replace curly single quotes with straight quote
+    .replace(/[\u201C\u201D]/g, '"') // Replace curly double quotes with straight quote
+    .replace(/[\u2013\u2014]/g, "-"); // Replace en/em dashes with hyphen
+};
+
 // Calculate how many services can fit on a page
 const SERVICES_PER_PAGE = 8; // Adjust based on your layout needs
 
@@ -211,7 +219,8 @@ interface ProposalServicesDocumentProps {
 }
 
 const renderFormattedText = (text: string) => {
-  const lines = text.split('\n');
+  const sanitizedText = sanitizeText(text);
+  const lines = sanitizedText.split('\n');
 
   return lines.map((line, lineIndex) => {
     const trimmedLine = line.trim();
@@ -302,9 +311,9 @@ export const ProposalServicesDocument = ({ services, para }: ProposalServicesDoc
                     ]}
                   >
                     <View style={styles.serviceDetails}>
-                      <Text style={styles.serviceHeading}>{service.service}</Text>
+                      <Text style={styles.serviceHeading}>{sanitizeText(service.service)}</Text>
                       {service.scopeOfWork && (
-                        <Text style={styles.serviceDescription}>{service.scopeOfWork}</Text>
+                        <Text style={styles.serviceDescription}>{sanitizeText(service.scopeOfWork)}</Text>
                       )}
                     </View>
                     <View style={styles.pricingContainer}>

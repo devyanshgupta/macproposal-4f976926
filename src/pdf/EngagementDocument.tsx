@@ -17,6 +17,8 @@ Font.register({
   ]
 });
 
+Font.registerHyphenationCallback(word => [word]);
+
 const styles = StyleSheet.create({
   page: {
     padding: 50,
@@ -220,6 +222,16 @@ const styles = StyleSheet.create({
 
 const formatCurrency = (value: number) => value.toLocaleString("en-IN");
 
+const sanitizeText = (text: string): string => {
+  if (!text) return text;
+  return text
+    .replace(/[\u2018\u2019]/g, "'") // Replace curly single quotes with straight quote
+    .replace(/[\u201C\u201D]/g, '"') // Replace curly double quotes with straight quote
+    .replace("’", "'")
+    .replace("‘", "'")
+  //.replace(/[\u2013\u2014]/g, "-"); // Replace en/em dashes with hyphen
+};
+
 type ProposalDocumentProps = {
   data: ProposalResponse;
   termsAndConditions?: string[];
@@ -283,8 +295,8 @@ export const ProposalDocument = ({ data, termsAndConditions, advancedTermsAndCon
 
         <Text style={styles.salutation}>Sir,</Text>
 
-        <Text style={styles.message}>{message}</Text>
-        {para && <Text style={styles.message}>{para}</Text>} {/* Display the new paragraph if it exists */}
+        <Text style={styles.message}>{sanitizeText(message)}</Text>
+        {para && <Text style={styles.message}>{sanitizeText(para)}</Text>} {/* Display the new paragraph if it exists */}
 
         {Object.entries(servicesByCategory).map(([category, categoryServices]) => (
           <View key={category}>
@@ -304,9 +316,9 @@ export const ProposalDocument = ({ data, termsAndConditions, advancedTermsAndCon
                       <Text style={styles.snoText}>{idx + 1}.</Text>
                     </View>
                     <View style={styles.scopeCell}>
-                      <Text style={styles.serviceTitle}>{svc.service}</Text>
+                      <Text style={styles.serviceTitle}>{sanitizeText(svc.service)}</Text>
                       {svc.scopeOfWork && (
-                        <Text style={styles.scopeText}>{svc.scopeOfWork}</Text>
+                        <Text style={styles.scopeText}>{sanitizeText(svc.scopeOfWork)}</Text>
                       )}
                     </View>
                     <View style={styles.priceCell}>
@@ -334,7 +346,7 @@ export const ProposalDocument = ({ data, termsAndConditions, advancedTermsAndCon
         <View style={styles.termsSection} wrap={false}>
           <Text style={styles.termsTitle}>General Terms and Conditions:</Text>
           {terms.map((term, idx) => (
-            <Text key={idx} style={styles.termItem}>• {term}</Text>
+            <Text key={idx} style={styles.termItem}>• {sanitizeText(term)}</Text>
           ))}
         </View>
 
@@ -376,16 +388,19 @@ export const ProposalDocument = ({ data, termsAndConditions, advancedTermsAndCon
       {advancedTermsAndConditions && advancedTermsAndConditions.length > 0 && (
         <Page size="A4" style={styles.advancedTermsPage}>
           <Text style={styles.advancedTermsTitle}>Terms and Conditions</Text>
-          {advancedTermsAndConditions.map((term, index) => (
-            <View key={index} style={styles.advancedTermBlock}>
-              <Text style={styles.advancedTermHeading}>{term.heading}</Text>
-              {term.points.map((point, pointIndex) => (
-                <Text key={pointIndex} style={styles.advancedTermPointer}>
-                  {term.points.length === 1 ? point : `• ${point}`}
-                </Text>
-              ))}
-            </View>
-          ))}
+          {advancedTermsAndConditions.map((term, index) => {
+            const headingText = term.heading.replace(/^\d+\.?\s*/, '');
+            return (
+              <View key={index} style={styles.advancedTermBlock}>
+                <Text style={styles.advancedTermHeading}>{`${index + 1}. ${sanitizeText(headingText)}`}</Text>
+                {term.points.map((point, pointIndex) => (
+                  <Text key={pointIndex} style={styles.advancedTermPointer}>
+                    {term.points.length === 1 ? sanitizeText(point) : `• ${sanitizeText(point)}`}
+                  </Text>
+                ))}
+              </View>
+            );
+          })}
         </Page>
       )}
     </Document>

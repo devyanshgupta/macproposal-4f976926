@@ -1,78 +1,138 @@
-1. Acceptance of Terms
-By accessing or using the service, you agree to these terms
-If you do not agree, you must not use the service
-Continued use implies ongoing acceptance
-2. Eligibility
-Users must be legally capable of entering a contract
-Minimum age requirements may apply
-Use is void where prohibited by law
-3. User Account Registration
-Accurate and complete information must be provided
-Users are responsible for maintaining confidentiality
-Accounts may be suspended for false information
-4. Use of Services
-Services must be used only for lawful purposes
-5. User Responsibilities
-Users must comply with all applicable laws
-Users are responsible for their activities
-Any harm caused by misuse is the userâ€™s liability
-6. Prohibited Activities
-No fraudulent or misleading actions
-No interference with system security
-No transmission of harmful or illegal content
-7. Intellectual Property Rights
-All content remains our intellectual property
-Users may not copy or redistribute without permission
-Limited licence granted for personal use
-8. User-Generated Content
-Users retain ownership of their content
-We may use content for service-related purposes
-Content must not violate any rights or laws
-9. Third-Party Links and Services
-Third-party links are provided for convenience
-We do not control external services
-Use of third-party services is at your own risk
-10. Privacy and Data Protection
-Personal data is handled as per our privacy policy
-Users consent to data collection and processing
-Reasonable security measures are implemented
-11. Payment Terms
-Fees must be paid as specified
-Prices may change with prior notice
-Non-payment may result in service suspension
-12. Refund and Cancellation Policy
-Refunds are subject to stated conditions
-Certain services may be non-refundable
-Cancellation requests must follow prescribed process
-13. Service Availability
-Services are provided on an as-is basis
-We do not guarantee uninterrupted access
-Maintenance or updates may cause downtime
-14. Limitation of Liability
-We are not liable for indirect or consequential losses
-Liability is limited to the maximum extent permitted by law
-Users assume all risks of usage
-15. Indemnification
-Users agree to indemnify us against claims
-Indemnity includes legal costs and damages
-Applies to breaches of these terms
-16. Termination of Use
-We may suspend or terminate access at any time
-Users may stop using the service voluntarily
-Obligations accrued prior to termination survive
-17. Modification of Terms
-Terms may be updated periodically
-Continued use implies acceptance of changes
-Users are responsible for reviewing updates
-18. Governing Law and Jurisdiction
-Terms are governed by Indian laws
-Courts of a specified jurisdiction shall have authority
-Conflict of law principles do not apply
-19. Force Majeure
-We are not liable for events beyond our control
-Includes natural disasters or government actions
-Obligations resume once conditions normalise
-20. Contact Information
-Users may contact us for queries or complaints
-Official communication channels must be used
-Response times may vary based on request type
+1.	GENERAL 
+In these General Terms and Conditions the following definitions apply: 
+General Terms and Conditions: these general terms and conditions. 
+MC: Mayur & Company 
+MC Member Firm: any entity, including MC, which is a member of the national and/or the international MC network and which is associated with MC. 
+Engagement Letter: a MC document which declares the General Terms and Conditions to apply and which describes the Work. 
+Client: the party awarding MC an engagement. 
+Engagement Team: the natural persons within MC, both individually and jointly, who are involved in performing the Work, and also third parties (being natural persons from outside MC) who have been called in by MC for the purposes of performing the Work. 
+Agreement: the General Terms and Conditions and the Engagement Letter together with any other documents and conditions which are applicable to the Work in the relationship between MC and the Client ('Additional Conditions') and to which the Engagement Letter expressly refers. 
+Work: the work to be performed by MC for a Client pursuant to the Engagement Letter. 
+2. 	APPLICABILITY OF THE GENERAL TERMS AND CONDITIONS 
+
+These General Terms and Conditions apply to the work to be performed by MC for a Client.
+The applicability of any of the Client's purchasing conditions or other conditions is expressly excluded. 
+FORMATION AND DURATION OF THE AGREEMENT 
+The Agreement will come into being at the moment when the Client confirms the Engagement Letter (orally or in writing or electronically or tacitly) or at the moment when the Work is commenced. 
+The Agreement is concluded for a fixed term, unless it follows from the content, nature or tenor of the engagement given by the Client that it has been concluded for an indefinite period. 
+4.	CONTENT OF THE AGREEMENT / PRIORITY IN CASE OF CONFLICT 
+
+The Agreement constitutes the basis for all arrangements between MC and the Client with respect to the Work. 
+Any amendments or changes to the Agreement must be recorded in writing and must be signed by an authorised representative of MC and an authorised representative of the Client. 
+In the event of conflict between the Engagement Letter and other elements of the Agreement, the Engagement Letter will prevail. In the event of conflict between the General Terms and Conditions and any Additional Conditions, the Additional Conditions will prevail. 
+5. 	THE WORK AND ITS PERFORMANCE 
+
+The Engagement Letter contains a description of the Work to be performed by MC. 
+MC will exert itself to the best of its abilities to perform the Work in accordance with the arrangements and procedures agreed in writing with the Client. 
+MC will determine how and by which person or persons the Work will be performed. If the Engagement Letter provides that specifically named persons will perform the Work, MC will make reasonable efforts to ensure that these persons perform the Work. MC has the right to replace the persons named in the Engagement Letter by persons of equal or comparable expertise. 
+If a phased performance of the Work has been agreed, MC may postpone commencing Work relating to a subsequent phase until the Client has accepted the results of the preceding phase in writing and has paid all sums due. 
+Time-limits within which the Work must be completed will not be considered as strict deadlines, unless this has been expressly agreed. Under no circumstances may the Client dissolve (ontbinden) the Agreement on account of a failure to meet a time-limit. Furthermore, MC will never be liable for compensation on account of any failure to meet a time-limit. 
+If, at the request or with the prior consent of the Client, MC carries out work or performs outside the content or scope of the Work, the Client will pay MC for such work or performance on the basis of MC's customary rates. 
+The Client agrees that work or performance as referred to in Article 5.6 may affect the agreed or anticipated time of completion of the Work and the mutual responsibilities of the Client and MC. 
+Upon completion of the Work MC may provide written advice, confirm an oral advice in writing, provide a (final) written report or give an oral presentation. Prior to completing the Work, MC may provide oral, draft or interim advice, reports or presentations. In this case, MC's written advice or (final) written report will prevail. The Client is not entitled to invoke draft or interim advice, reports or presentations. If the Client wishes to rely on an advice given orally or on an oral presentation given by way of completion of the Work, the Client must inform MC of this intention, following which MC will supply written confirmation of the advice concerned. 
+MC is not bound to update oral or written advice, reports or results of the Work in response to events occurring after the final version of the advice, report or results is issued. 
+Any advice, opinion, statement of expectation, forecasts and recommendations given by MC as part of the Work will under no condition or circumstance whatsoever be construed as a guarantee with respect to future events or circumstances. 
+6.	OBLIGATIONS OF THE CLIENT 
+
+Both of its own accord and at the request of MC, the Client will give its full cooperation and will in good time and in the desired form and manner make available all relevant documents which MC may reasonably deem necessary to receive from the Client for the proper performance of the Work. If MC works at the Client's premises or makes use of the Client's computer systems and telephone networks, the Client will (at its own expense) provide the necessary access, security procedures, virus controls, facilities, licenses and permissions. If any part of the Work is not performed at MC's own premises, the Client will also ensure that the employees of MC are provided with adequate working space and other facilities necessary for the performance of the Work, which should meet all the applicable statutory or other requirements. 
+The Client will ensure that MC is informed without delay of facts and circumstances which may be relevant in connection with the proper performance of the Work. 
+The Client warrants the accuracy, completeness, reliability and legitimacy of the data and documents made available to MC, including those originating from third parties, except where the nature of the Work dictates otherwise. 
+MC will not be liable for any loss suffered by the Client as a result of the fact that the Client or any third party (i) did not inform in good time of, or withheld, facts and circumstances which may be relevant in connection with the proper performance of the Work and (ii) misrepresented the facts. 
+The Client will bear the extra costs and additional fees arising from any delay in the performance of the Work caused by the fact that the required data, documents mentioned in Article 6.1 were not made available or were not made available properly or in good time, or by the failure to cooperate, to cooperate in good time or to cooperate properly, including  failure to make available employees. 
+7.	THE CLIENT'S RESPONSIBILITIES 
+
+Without prejudice to the obligations and responsibilities of MC in performing the Work, the Client will remain responsible and liable inter alia for the following: 
+
+the management and day-to-day conduct of its business, the performance of its business activities and dealing with its own business matters; 
+decisions taken by the Client about the extent to which it wishes to rely on the advice, recommendations or other results of the Work, and about using and implementing them; 
+decisions taken by the Client which affect the Work and its results. 
+8.	CONFIDENTIALITY 
+
+MC will keep secret any confidential information furnished by or on behalf of the Client concerning the Client's business or business matters. This obligation does not apply to information which MC is required to disclose by law, by any rule of a supervisory body of MC, or pursuant to a professional duty resting on MC or on persons employed by or for or attached to MC, or pursuant to a binding decision of a court or a public authority. 
+The obligation of paragraph 1 of this Article does not apply if the information referred to in that paragraph becomes publicly known. Furthermore, this obligation is without prejudice to the right of MC to submit information referred to in paragraph 1 of this Article to its insurers and/or advisers in connection with MC's professional liability or to a MC Member Firm if this is necessary for the support of its services. 
+MC is not authorized to use the information which the Client has placed at its disposal for another purpose than that for which it was obtained, unless MC acts for itself, or persons employed by or for or attached to MC act for themselves, in disciplinary, criminal or civil proceedings in which this information may be relevant. 
+Unless the Client has obtained prior written permission from MC, the Client will not disclose the content of the 
+Engagement Letter, reports, advice or other statements made by MC, whether or not in writing, which were not prepared or made for the purpose of providing the information contained therein to third parties. The Client will, moreover, ensure that third parties cannot take note of the content referred to in the preceding sentence. 
+Except with prior written permission from MC, the Client will not make any statements about the approach and working procedures used by MC. 
+The Client may exclusively use the quotation made by MC and the knowledge and ideas of MC contained in this quotation for the purposes of evaluating its interest in awarding the engagement. 
+MC and the Client will impose their obligations pursuant to 
+Article 8 on third parties engaged by them. 
+MC reserves the right to use the Client's name and to mention the kind of work it performed for the Client for publicity and reference purposes, and to mention all particulars which have already been made publicly known in the media. 
+9.	INTELLECTUAL PROPERTY 
+
+MC reserves all rights in respect of products of the mind that MC uses or has used, or develops or has developed, in performing the Work. 
+The Client is expressly prohibited from reproducing, disclosing or exploiting the products referred to in Article 9.1, including computer programmes, system designs, processes, advice, master or other contracts and other products of the mind of MC. 
+MC may use, continue to develop and exchange with other MC Member Firms the knowledge, experience and general skills acquired by MC as a result of performing the Work for the purposes of performing work for the Client and/or for clients of MC and/or for clients of (an) other MC Member Firm(s). 
+10.	KNOWLEDGE AND CONFLICTS 
+
+The Engagement Team will not be required, expected or assumed to have knowledge of facts and circumstances known to other persons within MC and/or to other persons within the other MC Member Firms. Consequently, MC cannot be held accountable by the Client for such facts and circumstances. 
+MC will be free at any time to render services to another party with an interest that competes or conflicts with the interests of the Client (hereinafter: a 'Conflicting Party'), unless the interests of the Conflicting Party compete or conflict specifically and directly with the Client's interests in relation to the underlying interest. In the event that the interests of the Conflicting Party compete or conflict specifically and directly with the Client's interests in relation to the underlying interest, the Engagement Team will not perform work for the Conflicting Party. Persons within MC other than those forming part of the Engagement Team may only render services to a Conflicting Party under the condition that appropriate security measures have been put in place. 
+If the Client is or has become aware of the fact and/or the circumstance that MC is advising or intends to advise a Conflicting Party in respect of an interest which competes or conflicts specifically and directly with the Client's interests, the Client will inform MC of the matter without delay in writing. 
+11.	FEE / PAYMENT 
+
+MC will invoice the Work on the basis of its fee, costs (including costs of third parties that have been engaged) and any taxes owing with respect to them. These items will be charged to the Client on a monthly, quarterly or annual basis, or upon completion of the Work, unless MC and the Client agreed otherwise.
+MC's fee does not depend on the result of the Work; MC's fee is based on the degree of responsibility of the persons in the Engagement Team, on their seniority, on their expert knowledge, on the time they spent on the Work and on the nature and complexity of the Work. 
+For the purposes of Article 11.1 costs means direct costs plus a mark-up to cover expenses not directly allocated to the Work. 
+The amount invoiced by MC may differ from earlier estimates or quotations. 
+Invoices will be paid by the Client, without any deduction, discount or setoff, within 7 days of the invoice date. If the Client fails to pay an invoice within this payment period, MC will be entitled, without further notice of default and without prejudice to the other rights of MC, to charge the Client legal commercial interest from the due date until the date of payment in full. 
+All judicial and extrajudicial collection and other costs reasonably incurred by MC as a result of the Client's failure to discharge its payment obligations will be borne by the Client. 
+If, in the opinion of MC, the Client's financial position or payment record gives reason to do so, MC may require the Client to make a full or partial advance payment and/or to provide (additional) security in a form to be determined by MC. If the Client fails to provide the required security, MC may, without prejudice to its other rights, immediately suspend the further performance of the Agreement and any amounts owing by the Client to MC on any account whatsoever will be immediately due and payable. 
+If several Clients have jointly awarded an engagement, the 
+Clients will be jointly and severally liable for payment of the invoice amount to the extent that the Work was performed for the Clients jointly. 
+12.	COMPLAINTS 
+
+Complaints about the Work performed and/or the invoice amount must be made known to MC in writing within fifteen (15) days of the date of dispatch or date of email of the documents or information about which the Client has a complaint, or within fifteen (15) days of the discovery of the defect if the Client proves that it could not reasonably have discovered the defect at an earlier date. 
+Complaints referred to in Article 12.1 will not suspend the 
+Client's obligation to pay. 
+In the event of a well-founded complaint MC will have the choice between adjusting the fee charged, correcting the rejected Work or doing it again, or not or no longer performing the engagement or part of the engagement while repaying a proportionate amount of the fee already paid by the Client. 
+13.	EARLY TERMINATION OF THE ENGAGEMENT 
+
+Both MC and the Client may terminate (opzeggen) the Agreement by thirty (30) days' written notice of termination. In the event of the Client terminating the Agreement as referred to in the preceding sentence, the Client is obliged to reimburse all the losses and costs suffered and incurred by MC. These losses and costs at least, but not exclusively, include all the costs incurred and investments made and capacity lost by MC, in respect of the Agreement and (future) Work. 
+MC may furthermore terminate (opzeggen) the Agreement by written notice with immediate effect in the event of unforeseen circumstances. 
+Both MC and the Client may only dissolve (ontbinden) the 
+Agreement if the other party fails imputably to perform an essential obligation under the Agreement and if the other party is in default in the matter. 
+Upon termination pursuant to paragraph 1, 2 or 3 of Article 13, MC will continue to be entitled to payment of invoices for Work already performed or any Work still to be performed by mutual agreement. The Client's obligation to pay invoices for Work already performed will become immediately due and payable as soon as the Agreement is terminated. 
+14.	LIABILITY 
+
+MC will perform the Work (and any additional work) to the best of its abilities and, in doing so, will exercise the required due care. MC will only be liable if the Client can demonstrate that it has suffered loss as a result of a material error on the part of MC. 
+MC's liability will be limited to an amount equal to one (1) time the fee payable to MC pursuant to the provisions of the Engagement Letter, except in the case of intent or willful recklessness on the part of MC's executive staff. This limitation of liability will apply in full in the event of liability to a number of Clients; in that case the amount paid by MC to all Clients jointly will not exceed one (1) time the fee payable to MC pursuant to the provisions of the Engagement Letter. 
+MC will not be liable in any way whatsoever for consequential loss (including but not limited to lost profit, lost savings, loss due to business interruption), except in the case of intent or willful recklessness on the part of MC's executive staff. 
+Except for the cases mentioned in Articles 14.1 to 14.3, MC will not be liable for damages on any account whatsoever. 
+MC will exercise due care when engaging third parties. MC will not be liable for any errors and/or failures of such third parties. This does not apply to third parties which act as subcontractors and which act under the responsibility of MC. 
+The limitations on liability laid down in Article 14 operate both on behalf of MC (itself) and of the persons, individually as well as jointly, within the Engagement Team. 
+MC Member Firms other than MC (whether or not engaged in the performance of the Work) will never be liable for any loss suffered on the part of the Client in connection with the Work. The limitations on liability laid down in this Article 14 will also operate on behalf of all MC Member Firms other than MC (whether or not engaged in the performance of the Work). 
+15.	INDEMNITY 
+
+The Client will indemnify MC against any and all claims of third parties arising from or connected to the Work performed or to be performed for the Client, unless such claims result from intent or willful recklessness on the part of MC's executive staff. The indemnity will include all loss suffered and legal and other costs incurred by MC in connection with claims. 
+The indemnity under paragraph 1 of this Article is also stipulated on behalf of the persons, both individually and jointly, forming the Engagement Team, and on behalf of the other MC Member Firms engaged by MC for the performance of the Work. 
+16.	PERSONAL DATA PROTECTION
+ 
+In performing the Work or in complying with its statutory obligations, MC may process personal data concerning the Client and/or persons associated with or employed by or for the Client.
+MC may process personal data for the purposes of supporting MC's services to the Client and to enable MC to approach the Client and/or persons employed by or for the Client with information and with services provided by MC and third parties, including other MC Member Firms.
+MC will process personal data in carrying out the activities mentioned in paragraphs 1 and 2 in accordance with the applicable legislation and regulations in the field of personal data protection. 
+The Client has an independent duty to comply with the applicable legislation and regulations in the field of personal data protection. The Client will indemnify MC against any and all claims by third parties on account of non-compliance by the Client with the applicable legislation and regulations. The indemnity will include all loss suffered and costs incurred by MC in connection with any such claim. 
+17.	EMAIL AND USE OF THE INTERNET 
+
+The Client and MC may communicate with each other by means of electronic mail (email). The use of email and the internet entails risks, however, for example (but not limited to), distortion, delay, interception, manipulation and viruses. MC will not be liable for any loss arising from the use of email and/or the internet. In case of doubt about the content or transmission of email the extracts from MC's computer systems will be decisive. 
+18.	CONFIDENTIALITY, SAFEKEEPING AND OWNERSHIP OF THE FILE 
+
+MC will keep a file on the Client's engagement. MC will take appropriate measures to safeguard the confidentiality and safekeeping of the file and to retain the files for a period which is acceptable by the professional practice standards and which is in accordance with the statutory regulations and professional rules on retention periods. The files are the property of MC. 
+19.	EXPIRATION 
+
+Unless otherwise provided in the General Terms and Conditions, any right of action and other powers of the Client vis-ˆ-vis MC on any account whatsoever will end upon the lapse of one (1) year after the moment when the Client became aware or could reasonably be aware of the existence of the right or powers in question. 
+20.	INDEPENDENCE 
+
+MC is bound to comply with independence regulations of national and international regulators. In order to enable MC to comply with the applicable independence regulations the Client will, on request, provide MC with timely, accurate and complete information on the legal structure and the control structure of the Client or the group to which the Client belongs, on all financial and other interests and participating interests of the Client, and on all other financial and other joint ventures and collaborative arrangements concerning its enterprise or organisation, all of the above in the widest sense of the word. 
+21.	NON-SOLICITATION 
+
+During the performance of the Work and for one (1) year after termination of the Agreement the parties will not employ any of the other party's persons involved with the Work or otherwise have them perform work or negotiate in that context with these persons, except with the other party's express prior written consent, which consent will not be withheld on unreasonable grounds. 
+22.	CONTINUED EFFECT 
+
+All rights and obligations arising from the Agreement that by their purport are intended to continue in force after termination of the Agreement will remain in full force between MC and the Client after the Agreement has ended. 
+23.	TRANSFER 
+
+Neither of the parties to the Agreement may transfer the rights and obligations arising from or related to the Agreement to a third party without the other party's express written permission. 
+24.	APPLICABLE LAW, JURISDICTION AND CHOICE OF FORUM 
+
+The Agreement is governed by Indian Contract Act etc. This is subject to Delhi Jurisdiction only. All disputes arising from or connected to the Agreement will fall under the exclusive jurisdiction of the competent court in the district in which MC has its seat.
+I hereby confirm that I have read all the terms and conditions and agree with and accept all the above terms and conditions.
