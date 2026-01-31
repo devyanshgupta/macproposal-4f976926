@@ -23,6 +23,8 @@ export const ServiceSelector = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [clientInfo, setClientInfo] = useState({
     name: "",
+    clientRepresentative: "",
+    clientRepresentativePost: "",
     contactNo: "",
     email: "",
     address: "",
@@ -31,6 +33,7 @@ export const ServiceSelector = () => {
     message: "Pursuant to our discussions, Mayur and Company Chartered Accountants, hereby propose to provide the following professional services to you:",
     date: new Date().toISOString().slice(0, 10),
     para: defaultTerms.join("\n"),
+    entityType: "company",
   });
   const [isGenerating, setIsGenerating] = useState(false);
   const [isPreparing, setIsPreparing] = useState(false);
@@ -229,10 +232,13 @@ export const ServiceSelector = () => {
     return {
       client: {
         name: clientInfo.name,
+        clientRepresentative: clientInfo.clientRepresentative,
+        clientRepresentativePost: clientInfo.clientRepresentativePost,
         contactNo: clientInfo.contactNo,
         email: clientInfo.email,
         address: clientInfo.address,
         PAN: clientInfo.PAN,
+        entityType: clientInfo.entityType as "company" | "proprietorship",
       },
       proposal: {
         preparedFor: clientInfo.name || "Client",
@@ -273,6 +279,22 @@ export const ServiceSelector = () => {
       }
 
       const normalized: ProposalResponse = await response.json();
+
+      // Ensure client details are preserved from state, in case backend didn't echo them back correctly
+      if (normalized.client) {
+        normalized.client = {
+          ...normalized.client,
+          name: clientInfo.name,
+          clientRepresentative: clientInfo.clientRepresentative,
+          clientRepresentativePost: clientInfo.clientRepresentativePost,
+          contactNo: clientInfo.contactNo,
+          email: clientInfo.email,
+          address: clientInfo.address,
+          PAN: clientInfo.PAN,
+          entityType: clientInfo.entityType as "company" | "proprietorship",
+        };
+      }
+
       const blob = await pdf(<ProposalDocument data={normalized} advancedTermsAndConditions={advancedTermsAndConditions} />).toBlob();
       const url = URL.createObjectURL(blob);
       const link = document.createElement("a");
@@ -493,6 +515,8 @@ export const ServiceSelector = () => {
         >
           <ClientInfo
             clientName={clientInfo.name}
+            clientRepresentative={clientInfo.clientRepresentative}
+            clientRepresentativePost={clientInfo.clientRepresentativePost}
             contactNo={clientInfo.contactNo}
             email={clientInfo.email}
             address={clientInfo.address}
@@ -501,6 +525,7 @@ export const ServiceSelector = () => {
             proposalDate={clientInfo.date}
             greeting={clientInfo.message}
             para={clientInfo.para} // Pass the new paragraph field
+            entityType={clientInfo.entityType}
             onFieldChange={handleClientFieldChange}
           />
           <div className="md:hidden mb-8">

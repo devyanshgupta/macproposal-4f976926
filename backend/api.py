@@ -30,10 +30,16 @@ class ProposalService(BaseModel):
 
 class ClientInfo(BaseModel):
     name: Optional[str] = None
+    clientRepresentative: Optional[str] = None
+    clientRepresentativePost: Optional[str] = None
     contactNo: Optional[str] = None
     email: Optional[str] = None
     address: Optional[str] = None
+    PAN: Optional[str] = None
+    utility: Optional[str] = None  # Assuming utility was not there but CIN was? Replaced CIN? 
+    # Wait, the original had CIN. I should keep CIN just in case, but replace/add PAN.
     CIN: Optional[str] = None
+    entityType: Optional[str] = None
 
 
 class ProposalMeta(BaseModel):
@@ -41,6 +47,7 @@ class ProposalMeta(BaseModel):
     preparedBy: Optional[str] = None
     date: Optional[str] = None
     message: Optional[str] = None
+    para: Optional[str] = None
 
 
 class ProposalPayload(BaseModel):
@@ -177,4 +184,4 @@ def prepare_proposal_letter(request: ClientInfo, background_tasks: BackgroundTas
 
 
 if __name__ == "__main__":
-    uvicorn.run("api:app", host="0.0.0.0", port=8000)
+    uvicorn.run("api:app", host="0.0.0.0", port=8000)# Trigger reload

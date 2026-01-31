@@ -12,10 +12,13 @@ export interface ProposalService {
 
 export interface ClientInfo {
   name?: string;
+  clientRepresentative?: string;
+  clientRepresentativePost?: string;
   contactNo?: string;
   email?: string;
   address?: string;
   PAN?: string;
+  entityType?: 'company' | 'proprietorship';
 }
 
 export interface ProposalMeta {

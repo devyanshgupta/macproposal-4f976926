@@ -3,6 +3,8 @@ import { Bold, List } from "lucide-react";
 
 interface ClientInfoProps {
   clientName: string;
+  clientRepresentative: string;
+  clientRepresentativePost: string;
   contactNo: string;
   email: string;
   address: string;
@@ -10,12 +12,15 @@ interface ClientInfoProps {
   preparedBy: string;
   proposalDate: string;
   greeting: string;
+  entityType?: string;
   para: string; // Added new field for paragraph
   onFieldChange: (field: string, value: string) => void;
 }
 
 export const ClientInfo = ({
   clientName,
+  clientRepresentative,
+  clientRepresentativePost,
   contactNo,
   email,
   address,
@@ -23,6 +28,7 @@ export const ClientInfo = ({
   preparedBy,
   proposalDate,
   greeting,
+  entityType = "company",
   para, // Added new field for paragraph
   onFieldChange,
 }: ClientInfoProps) => {
@@ -36,6 +42,21 @@ export const ClientInfo = ({
         <h2 className="text-2xl font-bold text-foreground mb-6">Client Details</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="flex flex-col">
+            <label htmlFor="entity-type" className="text-sm font-medium text-foreground/70 mb-2">
+              Client Entity Type
+            </label>
+            <select
+              id="entity-type"
+              value={entityType}
+              onChange={(e) => onFieldChange("entityType", e.target.value)}
+              className="px-4 py-2 border border-border rounded-lg bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"
+            >
+              <option value="company">Company</option>
+              <option value="proprietorship">Proprietorship/Partnership</option>
+            </select>
+          </div>
+
+          <div className="flex flex-col">
             <label htmlFor="client-name" className="text-sm font-medium text-foreground/70 mb-2">
               Client/Company Name
             </label>
@@ -45,6 +66,34 @@ export const ClientInfo = ({
               placeholder="Enter client name"
               value={clientName}
               onChange={(e) => onFieldChange("name", e.target.value)}
+              className="px-4 py-2 border border-border rounded-lg bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"
+            />
+          </div>
+
+          <div className="flex flex-col">
+            <label htmlFor="client-representative" className="text-sm font-medium text-foreground/70 mb-2">
+              Client Representative
+            </label>
+            <input
+              id="client-representative"
+              type="text"
+              placeholder="Enter client representative"
+              value={clientRepresentative}
+              onChange={(e) => onFieldChange("clientRepresentative", e.target.value)}
+              className="px-4 py-2 border border-border rounded-lg bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"
+            />
+          </div>
+
+          <div className="flex flex-col">
+            <label htmlFor="client-representative-post" className="text-sm font-medium text-foreground/70 mb-2">
+              Client Representative Post
+            </label>
+            <input
+              id="client-representative-post"
+              type="text"
+              placeholder="Enter client representative post"
+              value={clientRepresentativePost}
+              onChange={(e) => onFieldChange("clientRepresentativePost", e.target.value)}
               className="px-4 py-2 border border-border rounded-lg bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"
             />
           </div>

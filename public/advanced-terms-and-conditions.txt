@@ -12,7 +12,7 @@ Work: the work to be performed by MC for a Client pursuant to the Engagement Let
 
 These General Terms and Conditions apply to the work to be performed by MC for a Client.
 The applicability of any of the Client's purchasing conditions or other conditions is expressly excluded. 
-FORMATION AND DURATION OF THE AGREEMENT 
+3. 	FORMATION AND DURATION OF THE AGREEMENT 
 The Agreement will come into being at the moment when the Client confirms the Engagement Letter (orally or in writing or electronically or tacitly) or at the moment when the Work is commenced. 
 The Agreement is concluded for a fixed term, unless it follows from the content, nature or tenor of the engagement given by the Client that it has been concluded for an indefinite period. 
 4.	CONTENT OF THE AGREEMENT / PRIORITY IN CASE OF CONFLICT 
@@ -135,4 +135,3 @@ Neither of the parties to the Agreement may transfer the rights and obligations 
 24.	APPLICABLE LAW, JURISDICTION AND CHOICE OF FORUM 
 
 The Agreement is governed by Indian Contract Act etc. This is subject to Delhi Jurisdiction only. All disputes arising from or connected to the Agreement will fall under the exclusive jurisdiction of the competent court in the district in which MC has its seat.
-I hereby confirm that I have read all the terms and conditions and agree with and accept all the above terms and conditions.

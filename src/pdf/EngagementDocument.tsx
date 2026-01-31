@@ -189,7 +189,7 @@ const styles = StyleSheet.create({
   advancedTermsPage: {
     padding: 50,
     fontSize: 10,
-    //fontFamily: "HK Grotesk",
+    fontFamily: "Helvetica",
     //color: "#1f2937",
     lineHeight: 1.6,
   },
@@ -207,7 +207,7 @@ const styles = StyleSheet.create({
     fontSize: 11,
     fontWeight: "bold",
     marginBottom: 8,
-    //fontFamily: "Open Sauce",
+    fontFamily: "Helvetica",
     //color: "#000",
     //letterSpacing: -0.5,
   },
@@ -248,6 +248,8 @@ export const defaultTerms = [
 export const ProposalDocument = ({ data, advancedTermsAndConditions }: ProposalDocumentProps) => {
   const services = data.services ?? [];
   const clientName = data.client?.name || "Client Name";
+  const clientRepresentative = data.client?.clientRepresentative || "";
+  const clientRepresentativePost = data.client?.clientRepresentativePost || "";
   const clientEmail = data.client?.email || "";
   const clientPhone = data.client?.contactNo || "";
   const PAN = data.client?.PAN?.trim() || "";
@@ -261,7 +263,9 @@ export const ProposalDocument = ({ data, advancedTermsAndConditions }: ProposalD
     "We are pleased to submit our proposal for providing professional services to your esteemed organization. Please find below the scope of work along with professional fees and terms and conditions.";
   const para = data.proposal?.para || ""; // Retrieve the new paragraph field
 
-  const isIndividual = !PAN;
+  const entityType = data.client?.entityType;
+  const isProprietorshipOrPartnership = entityType == 'proprietorship'
+  const isCompany = !isProprietorshipOrPartnership;
 
   const servicesByCategory = services.reduce((acc, service) => {
     const category = service.category;
@@ -284,11 +288,11 @@ export const ProposalDocument = ({ data, advancedTermsAndConditions }: ProposalD
 
         <View style={styles.addressBlock}>
           <Text>To,</Text>
-          {!isIndividual && <Text style={styles.bold}>The Board of Directors</Text>}
+          {isCompany && <Text style={styles.bold}>The Board of Directors</Text>}
           <Text style={styles.bold}>{clientName}</Text>
           {clientEmail && <Text>Email: {clientEmail}</Text>}
           {clientPhone && <Text>Phone: {clientPhone}</Text>}
-          {!isIndividual && <Text>PAN - {PAN}</Text>}
+          {PAN && <Text>PAN - {PAN}</Text>}
           {address && <Text>Address: {address}</Text>}
         </View>
 
@@ -388,11 +392,19 @@ export const ProposalDocument = ({ data, advancedTermsAndConditions }: ProposalD
           {/* Right Block - Client */}
           <View style={styles.signatureBlock}>
             <View style={{ borderTop: '1px solid #333', width: '100%', marginTop: 80, marginBottom: 10 }} />
-            {!isIndividual && <Text style={[styles.signatureLine, styles.bold]}>For and on behalf of</Text>}
-            {!isIndividual && <Text style={[styles.signatureLine, styles.bold]}>The Board of Directors</Text>}
-            <Text style={[styles.signatureLine, styles.bold]}>{clientName}</Text>
-            {!isIndividual && <Text style={styles.signatureLine}>Authorized Signatory</Text>}
-            {!isIndividual && <Text style={styles.signatureLine}>PAN - {PAN}</Text>}
+            {isCompany ? (
+              <>
+                {clientRepresentative ? <Text style={styles.signatureLine}>{clientRepresentative}</Text> : null}
+                {clientRepresentativePost ? <Text style={styles.signatureLine}>{clientRepresentativePost}</Text> : null}
+                <Text style={[styles.signatureLine, styles.bold]}>For and on behalf of</Text>
+                <Text style={[styles.signatureLine, styles.bold]}>The Board of Directors</Text>
+                <Text style={[styles.signatureLine, styles.bold]}>{clientName}</Text>
+                <Text style={styles.signatureLine}>Authorized Signatory</Text>
+              </>
+            ) : (
+              <Text style={[styles.signatureLine, styles.bold]}>{clientName}</Text>
+            )}
+            {PAN && <Text style={styles.signatureLine}>PAN - {PAN}</Text>}
             <Text style={styles.signatureLine}>Date – {proposalDate}</Text>
             {address && <Text style={styles.signatureLine}>Address: {address}</Text>}
             {clientEmail && <Text style={styles.signatureLine}>Email: {clientEmail}</Text>}
@@ -403,21 +415,68 @@ export const ProposalDocument = ({ data, advancedTermsAndConditions }: ProposalD
       </Page>
 
       {advancedTermsAndConditions && advancedTermsAndConditions.length > 0 && (
+
         <Page size="A4" style={styles.advancedTermsPage}>
           <Text style={styles.advancedTermsTitle}>General Terms and Conditions</Text>
           {advancedTermsAndConditions.map((term, index) => {
             const headingText = term.heading.replace(/^\d+\.?\s*/, '');
+            const toRoman = (num) => {
+              const romans = [
+                'i', 'ii', 'iii', 'iv', 'v',
+                'vi', 'vii', 'viii', 'ix', 'x',
+                'xi', 'xii', 'xiii', 'xiv', 'xv',
+                'xvi', 'xvii', 'xviii', 'xix', 'xx',
+              ];
+              return romans[num - 1] || num.toString();
+            };
             return (
               <View key={index} style={styles.advancedTermBlock}>
                 <Text style={styles.advancedTermHeading}>{`${index + 1}. ${sanitizeText(headingText)}`}</Text>
                 {term.points.map((point, pointIndex) => (
                   <Text key={pointIndex} style={styles.advancedTermPointer}>
-                    {term.points.length === 1 ? sanitizeText(point) : `• ${sanitizeText(point)}`}
+                    {term.points.length === 1 ? sanitizeText(point) : `${toRoman(pointIndex + 1)}. ${sanitizeText(point)}`}
                   </Text>
                 ))}
               </View>
             );
           })}
+          <Text style={styles.enclosure}>
+            <Text style={styles.bold}>Note:</Text> Clients are hereby informed that they may formally request a translation of the General Terms & Conditions into Hindi language if required. Such requests will be accommodated to the extent feasible, subject to the company’s standard procedures and timelines. In the event of any inconsistencies or ambiguities between the translated General Terms & Conditions and the English version, the English version shall prevail and be deemed authoritative.{'\n\n'}
+            I hereby confirm that I have read all the above-mentioned General Terms and Conditions of Mayur and Company, Chartered Accountants and agree and accept all the above-mentioned General Terms and Conditions of Mayur and Company, Chartered Accountants.</Text>
+          <View style={styles.signatureContainer} wrap={false}>
+            {/* Left Block - CA Mayur Gupta */}
+            <View style={styles.signatureBlock}>
+              <View style={{ borderTop: '1px solid #333', width: '100%', marginTop: 80, marginBottom: 10 }} />
+              <Text style={[styles.signatureLine, styles.bold]}>CA MAYUR GUPTA, FCA</Text>
+              <Text style={styles.signatureLine}>PROPRIETOR</Text>
+              <Text style={[styles.signatureLine, styles.bold]}>FOR MAYUR AND COMPANY</Text>
+              <Text style={styles.signatureLine}>CHARTERED ACCOUNTANTS</Text>
+              <Text style={styles.signatureLine}>DATE – {proposalDate}</Text>
+              <Text style={styles.signatureLine}>PLACE: DELHI</Text>
+            </View>
+
+            {/* Right Block - Client */}
+            <View style={styles.signatureBlock}>
+              <View style={{ borderTop: '1px solid #333', width: '100%', marginTop: 80, marginBottom: 10 }} />
+              {isCompany ? (
+                <>
+                  {clientRepresentative ? <Text style={styles.signatureLine}>{clientRepresentative}</Text> : null}
+                  {clientRepresentativePost ? <Text style={styles.signatureLine}>{clientRepresentativePost}</Text> : null}
+                  <Text style={[styles.signatureLine, styles.bold]}>For and on behalf of</Text>
+                  <Text style={[styles.signatureLine, styles.bold]}>The Board of Directors</Text>
+                  <Text style={[styles.signatureLine, styles.bold]}>{clientName}</Text>
+                  <Text style={styles.signatureLine}>Authorized Signatory</Text>
+                </>
+              ) : (
+                <Text style={[styles.signatureLine, styles.bold]}>{clientName}</Text>
+              )}
+              {PAN && <Text style={styles.signatureLine}>PAN - {PAN}</Text>}
+              <Text style={styles.signatureLine}>Date – {proposalDate}</Text>
+              {address && <Text style={styles.signatureLine}>Address: {address}</Text>}
+              {clientEmail && <Text style={styles.signatureLine}>Email: {clientEmail}</Text>}
+              {clientPhone && <Text style={styles.signatureLine}>Phone: {clientPhone}</Text>}
+            </View>
+          </View>
         </Page>
       )}
     </Document>
