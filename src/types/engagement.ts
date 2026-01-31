@@ -15,7 +15,7 @@ export interface ClientInfo {
   contactNo?: string;
   email?: string;
   address?: string;
-  CIN?: string;
+  PAN?: string;
 }
 
 export interface ProposalMeta {

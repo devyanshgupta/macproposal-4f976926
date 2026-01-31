@@ -148,6 +148,7 @@ const styles = StyleSheet.create({
   termsTitle: {
     fontWeight: "bold",
     marginBottom: 12,
+    fontSize: 15,
     textDecoration: "underline",
   },
   termItem: {
@@ -188,8 +189,8 @@ const styles = StyleSheet.create({
   advancedTermsPage: {
     padding: 50,
     fontSize: 10,
-    fontFamily: "HK Grotesk",
-    color: "#1f2937",
+    //fontFamily: "HK Grotesk",
+    //color: "#1f2937",
     lineHeight: 1.6,
   },
   advancedTermsTitle: {
@@ -206,17 +207,17 @@ const styles = StyleSheet.create({
     fontSize: 11,
     fontWeight: "bold",
     marginBottom: 8,
-    fontFamily: "Open Sauce",
-    color: "#000",
-    letterSpacing: -0.5,
+    //fontFamily: "Open Sauce",
+    //color: "#000",
+    //letterSpacing: -0.5,
   },
   advancedTermPointer: {
     marginBottom: 6,
     textAlign: "justify",
     paddingLeft: 10,
-    fontFamily: "Open Sauce",
-    color: "#000",
-    letterSpacing: 0,
+    //fontFamily: "Open Sauce",
+    //color: "#000",
+    //letterSpacing: 0,
   },
 });
 
@@ -234,16 +235,22 @@ const sanitizeText = (text: string): string => {
 
 type ProposalDocumentProps = {
   data: ProposalResponse;
-  termsAndConditions?: string[];
   advancedTermsAndConditions?: AdvancedTerm[];
 };
 
-export const ProposalDocument = ({ data, termsAndConditions, advancedTermsAndConditions }: ProposalDocumentProps) => {
+
+export const defaultTerms = [
+  "GST as per applicable rate will be extra. Presently GST rate is 18%.",
+  "All out of pocket expenses shall be reimbursed on actual basis.",
+  "General Terms and Conditions of Mayur & Company, attached herewith, shall apply."
+];
+
+export const ProposalDocument = ({ data, advancedTermsAndConditions }: ProposalDocumentProps) => {
   const services = data.services ?? [];
   const clientName = data.client?.name || "Client Name";
   const clientEmail = data.client?.email || "";
   const clientPhone = data.client?.contactNo || "";
-  const cin = data.client?.CIN?.trim() || "";
+  const PAN = data.client?.PAN?.trim() || "";
   const address = data.client?.address || "";
   const proposalDate = data.proposal?.date || new Date().toLocaleDateString("en-IN", {
     day: "2-digit",
@@ -254,7 +261,7 @@ export const ProposalDocument = ({ data, termsAndConditions, advancedTermsAndCon
     "We are pleased to submit our proposal for providing professional services to your esteemed organization. Please find below the scope of work along with professional fees and terms and conditions.";
   const para = data.proposal?.para || ""; // Retrieve the new paragraph field
 
-  const isIndividual = !cin;
+  const isIndividual = !PAN;
 
   const servicesByCategory = services.reduce((acc, service) => {
     const category = service.category;
@@ -265,14 +272,10 @@ export const ProposalDocument = ({ data, termsAndConditions, advancedTermsAndCon
     return acc;
   }, {} as Record<string, typeof services>);
 
-  const defaultTerms = [
-    "GST as per applicable rate will be extra. Presently GST rate is 18%.",
-    "All out of pocket expenses shall be reimbursed on actual basis. E.g. ROC Fees, Income Tax, Travel and Conveyance for performing auditing at your office etc.",
-    "Your Company should maintain proper books of accounts, vouchers, bills, and files and provide the same to us on timely manner to enable us to complete the auditing within the prescribed time.",
-    "Company shall also agree and accept to general terms and conditions of Mayur and Company attached herewith."
-  ];
 
-  const terms = termsAndConditions && termsAndConditions.length > 0 ? termsAndConditions : defaultTerms;
+
+  const userTerms = para ? para.split(/\r?\n/).filter(t => t.trim() !== "") : [];
+  const terms = userTerms.length > 0 ? userTerms : defaultTerms;
 
   return (
     <Document>
@@ -285,7 +288,7 @@ export const ProposalDocument = ({ data, termsAndConditions, advancedTermsAndCon
           <Text style={styles.bold}>{clientName}</Text>
           {clientEmail && <Text>Email: {clientEmail}</Text>}
           {clientPhone && <Text>Phone: {clientPhone}</Text>}
-          {!isIndividual && <Text>CIN - {cin}</Text>}
+          {!isIndividual && <Text>PAN - {PAN}</Text>}
           {address && <Text>Address: {address}</Text>}
         </View>
 
@@ -309,7 +312,8 @@ export const ProposalDocument = ({ data, termsAndConditions, advancedTermsAndCon
               </View>
 
               {categoryServices.map((svc, idx) => {
-                const hasCustomPrice = svc.discountedPrice != null && svc.discountedPrice !== svc.price;
+                const hasLowerPrice = svc.discountedPrice != null && svc.discountedPrice !== svc.price && svc.discountedPrice < svc.price;
+                const hasHigherPrice = svc.discountedPrice != null && svc.discountedPrice !== svc.price && svc.discountedPrice > svc.price;
                 return (
                   <View key={svc.id} style={styles.tableRow} wrap={false}>
                     <View style={styles.snoCell}>
@@ -323,11 +327,13 @@ export const ProposalDocument = ({ data, termsAndConditions, advancedTermsAndCon
                     </View>
                     <View style={styles.priceCell}>
                       <View style={styles.priceRow}>
-                        {hasCustomPrice ? (
+                        {hasLowerPrice ? (
                           <>
                             <Text style={styles.originalPrice}>{formatCurrency(svc.price)}</Text>
                             <Text style={styles.currentPrice}>{formatCurrency(svc.discountedPrice!)}</Text>
                           </>
+                        ) : hasHigherPrice ? (
+                          <Text style={styles.normalPrice}>{formatCurrency(svc.discountedPrice)}</Text>
                         ) : (
                           <Text style={styles.normalPrice}>{formatCurrency(svc.price)}</Text>
                         )}
@@ -344,14 +350,27 @@ export const ProposalDocument = ({ data, termsAndConditions, advancedTermsAndCon
         ))}
 
         <View style={styles.termsSection} wrap={false}>
-          <Text style={styles.termsTitle}>General Terms and Conditions:</Text>
-          {terms.map((term, idx) => (
-            <Text key={idx} style={styles.termItem}>• {sanitizeText(term)}</Text>
-          ))}
+          <Text style={styles.termsTitle}>Specific Terms and Conditions:</Text>
+          {terms.map((term, idx) => {
+            // Remove existing bullets if the user typed them
+            const cleanTerm = term.replace(/^-\s*/, '').replace(/^•\s*/, '');
+            // Split by markdown bold syntax **text**
+            const parts = cleanTerm.split(/(\*\*.*?\*\*)/g);
+            return (
+              <Text key={idx} style={styles.termItem}>
+                • {parts.map((part, pIdx) => {
+                  if (part.startsWith('**') && part.endsWith('**')) {
+                    return <Text key={pIdx} style={styles.bold}>{sanitizeText(part.slice(2, -2))}</Text>;
+                  }
+                  return <Text key={pIdx}>{sanitizeText(part)}</Text>;
+                })}
+              </Text>
+            );
+          })}
         </View>
 
         <Text style={{ marginTop: 16, marginBottom: 40 }}>
-          Please send us signed and stamped copy of this letter as a token of your acceptance.
+          Please send us signed copy of this Engagement Letter as a token of your acceptance. You may also sign it digitally.
         </Text>
 
         <View style={styles.signatureContainer} wrap={false}>
@@ -364,8 +383,6 @@ export const ProposalDocument = ({ data, termsAndConditions, advancedTermsAndCon
             <Text style={styles.signatureLine}>CHARTERED ACCOUNTANTS</Text>
             <Text style={styles.signatureLine}>DATE – {proposalDate}</Text>
             <Text style={styles.signatureLine}>PLACE: DELHI</Text>
-            <Text style={styles.signatureLine}>M.NO.503036</Text>
-            <Text style={styles.signatureLine}>FRN-021448N</Text>
           </View>
 
           {/* Right Block - Client */}
@@ -375,7 +392,7 @@ export const ProposalDocument = ({ data, termsAndConditions, advancedTermsAndCon
             {!isIndividual && <Text style={[styles.signatureLine, styles.bold]}>The Board of Directors</Text>}
             <Text style={[styles.signatureLine, styles.bold]}>{clientName}</Text>
             {!isIndividual && <Text style={styles.signatureLine}>Authorized Signatory</Text>}
-            {!isIndividual && <Text style={styles.signatureLine}>CIN - {cin}</Text>}
+            {!isIndividual && <Text style={styles.signatureLine}>PAN - {PAN}</Text>}
             <Text style={styles.signatureLine}>Date – {proposalDate}</Text>
             {address && <Text style={styles.signatureLine}>Address: {address}</Text>}
             {clientEmail && <Text style={styles.signatureLine}>Email: {clientEmail}</Text>}
@@ -387,7 +404,7 @@ export const ProposalDocument = ({ data, termsAndConditions, advancedTermsAndCon
 
       {advancedTermsAndConditions && advancedTermsAndConditions.length > 0 && (
         <Page size="A4" style={styles.advancedTermsPage}>
-          <Text style={styles.advancedTermsTitle}>Terms and Conditions</Text>
+          <Text style={styles.advancedTermsTitle}>General Terms and Conditions</Text>
           {advancedTermsAndConditions.map((term, index) => {
             const headingText = term.heading.replace(/^\d+\.?\s*/, '');
             return (

@@ -9,7 +9,7 @@ import { ClientInfo } from "./ClientInfo";
 import { CustomServiceForm } from "./CustomServiceForm";
 import { SearchBar } from "./SearchBar";
 import { ServiceItem as ServiceItemType } from "@/data/servicesData";
-import { ProposalDocument } from "@/pdf/EngagementDocument";
+import { ProposalDocument, defaultTerms } from "@/pdf/EngagementDocument";
 import { ProposalServicesDocument } from "@/pdf/Proposal_services";
 import { ProposalPayload, ProposalResponse, AdvancedTerm } from "@/types/engagement";
 
@@ -26,17 +26,16 @@ export const ServiceSelector = () => {
     contactNo: "",
     email: "",
     address: "",
-    CIN: "",
+    PAN: "",
     preparedBy: "Mayur & Company Chartered Accountants",
-    message: "Pursuant to our discussions, Mayur and Company Chartered Accountants, hereby propose to provide the following professional services to your company:",
+    message: "Pursuant to our discussions, Mayur and Company Chartered Accountants, hereby propose to provide the following professional services to you:",
     date: new Date().toISOString().slice(0, 10),
-    para: "", // Added new field for paragraph
+    para: defaultTerms.join("\n"),
   });
   const [isGenerating, setIsGenerating] = useState(false);
   const [isPreparing, setIsPreparing] = useState(false);
   const [isGeneratingServices, setIsGeneratingServices] = useState(false);
   const [isGeneratingFinalProposal, setIsGeneratingFinalProposal] = useState(false);
-  const [termsAndConditions, setTermsAndConditions] = useState<string[]>([]);
   const [advancedTermsAndConditions, setAdvancedTermsAndConditions] = useState<AdvancedTerm[]>([]);
 
   const contentRef = useRef<HTMLDivElement>(null);
@@ -58,19 +57,7 @@ export const ServiceSelector = () => {
       }
     };
 
-    const fetchTermsAndConditions = async () => {
-      try {
-        const response = await fetch('/terms-and-conditions.txt');
-        const text = await response.text();
-        const terms = text.split('\n\n').filter(t => t.trim());
-        setTermsAndConditions(terms);
-      } catch (error) {
-        console.error("Error fetching terms and conditions:", error);
-      }
-    };
-
     fetchServices();
-    fetchTermsAndConditions();
     const fetchAdvancedTermsAndConditions = async () => {
       try {
         const response = await fetch('/advanced-terms-and-conditions.txt');
@@ -245,13 +232,14 @@ export const ServiceSelector = () => {
         contactNo: clientInfo.contactNo,
         email: clientInfo.email,
         address: clientInfo.address,
-        CIN: clientInfo.CIN,
+        PAN: clientInfo.PAN,
       },
       proposal: {
         preparedFor: clientInfo.name || "Client",
         preparedBy: clientInfo.preparedBy,
         date: clientInfo.date,
         message: clientInfo.message,
+        para: clientInfo.para,
       },
       services: selected.map((svc) => ({
         id: svc.id,
@@ -285,7 +273,7 @@ export const ServiceSelector = () => {
       }
 
       const normalized: ProposalResponse = await response.json();
-      const blob = await pdf(<ProposalDocument data={normalized} termsAndConditions={termsAndConditions} advancedTermsAndConditions={advancedTermsAndConditions} />).toBlob();
+      const blob = await pdf(<ProposalDocument data={normalized} advancedTermsAndConditions={advancedTermsAndConditions} />).toBlob();
       const url = URL.createObjectURL(blob);
       const link = document.createElement("a");
       link.href = url;
@@ -508,7 +496,7 @@ export const ServiceSelector = () => {
             contactNo={clientInfo.contactNo}
             email={clientInfo.email}
             address={clientInfo.address}
-            CIN={clientInfo.CIN}
+            PAN={clientInfo.PAN}
             preparedBy={clientInfo.preparedBy}
             proposalDate={clientInfo.date}
             greeting={clientInfo.message}

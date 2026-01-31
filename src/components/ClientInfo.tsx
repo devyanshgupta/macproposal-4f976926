@@ -6,7 +6,7 @@ interface ClientInfoProps {
   contactNo: string;
   email: string;
   address: string;
-  CIN: string;
+  PAN: string;
   preparedBy: string;
   proposalDate: string;
   greeting: string;
@@ -19,7 +19,7 @@ export const ClientInfo = ({
   contactNo,
   email,
   address,
-  CIN,
+  PAN,
   preparedBy,
   proposalDate,
   greeting,
@@ -37,7 +37,7 @@ export const ClientInfo = ({
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="flex flex-col">
             <label htmlFor="client-name" className="text-sm font-medium text-foreground/70 mb-2">
-              Client Name
+              Client/Company Name
             </label>
             <input
               id="client-name"
@@ -45,6 +45,20 @@ export const ClientInfo = ({
               placeholder="Enter client name"
               value={clientName}
               onChange={(e) => onFieldChange("name", e.target.value)}
+              className="px-4 py-2 border border-border rounded-lg bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"
+            />
+          </div>
+
+          <div className="flex flex-col">
+            <label htmlFor="client-PAN" className="text-sm font-medium text-foreground/70 mb-2">
+              Client PAN Number
+            </label>
+            <input
+              id="client-PAN"
+              type="text"
+              placeholder="Enter PAN"
+              value={PAN}
+              onChange={(e) => onFieldChange("PAN", e.target.value)}
               className="px-4 py-2 border border-border rounded-lg bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"
             />
           </div>
@@ -90,21 +104,7 @@ export const ClientInfo = ({
             />
           </div>
 
-          <div className="flex flex-col">
-            <label htmlFor="client-CIN" className="text-sm font-medium text-foreground/70 mb-2">
-              Client CIN Number
-            </label>
-            <input
-              id="client-CIN"
-              type="text"
-              placeholder="Enter CIN"
-              value={CIN}
-              onChange={(e) => onFieldChange("CIN", e.target.value)}
-              className="px-4 py-2 border border-border rounded-lg bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"
-            />
-          </div>
-
-          <div className="flex flex-col">
+          {/*<div className="flex flex-col">
             <label htmlFor="prepared-by" className="text-sm font-medium text-foreground/70 mb-2">
               Prepared By
             </label>
@@ -116,7 +116,7 @@ export const ClientInfo = ({
               onChange={(e) => onFieldChange("preparedBy", e.target.value)}
               className="px-4 py-2 border border-border rounded-lg bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"
             />
-          </div>
+          </div>*/}
 
           <div className="flex flex-col">
             <label htmlFor="proposal-date" className="text-sm font-medium text-foreground/70 mb-2">
@@ -135,7 +135,7 @@ export const ClientInfo = ({
           <div className="flex flex-col md:col-span-3">
             <div className="flex items-center justify-between mb-2">
               <label htmlFor="para" className="text-sm font-medium text-foreground/70">
-                Notes from CA (To be placed in the Proposal)
+                Specific Terms and Conditions
               </label>
               <div className="flex gap-2">
                 <button
@@ -185,7 +185,7 @@ export const ClientInfo = ({
             </div>
             <textarea
               id="para"
-              placeholder="Add notes from the CA (use **text** for bold, - for bullets)"
+              placeholder="Add Specific Terms and Conditions to use (use **text** for bold, - for bullets)"
               value={para}
               onChange={(e) => onFieldChange("para", e.target.value)}
               className="px-4 py-3 border border-border rounded-lg bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all min-h-[96px]"
