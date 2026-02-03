@@ -17,7 +17,16 @@ Font.register({
   ]
 });
 
-Font.registerHyphenationCallback(word => [word]);
+Font.register({
+  family: 'Noto Serif Devanagari',
+  fonts: [
+    { src: '/fonts/Noto_Serif_Devanagari/static/NotoSerifDevanagari-Regular.ttf', fontWeight: 'normal' },
+    { src: '/fonts/Noto_Serif_Devanagari/static/NotoSerifDevanagari-Bold.ttf', fontWeight: 'bold' },
+  ]
+});
+
+
+Font.registerHyphenationCallback(word => {return [word];});
 
 const styles = StyleSheet.create({
   page: {
@@ -180,6 +189,16 @@ const styles = StyleSheet.create({
   },
   enclosure: {
     marginTop: 20,
+  },
+  boldHindi: {
+    fontFamily: "Noto Serif Devanagari",
+  },
+  enclosureHindi: {
+    fontFamily: "Noto Serif Devanagari",
+    fontWeight: "normal",
+    fontSize:12,
+    wordBreak: 'keep-all',
+    lineHeight: 1.2,
   },
   snoCircle: {
     width: 18,
@@ -452,20 +471,12 @@ export const ProposalDocument = ({ data, advancedTermsAndConditions }: ProposalD
             );
           })}
           <Text style={styles.enclosure}>
-            <Text style={styles.bold}>Note:</Text> Clients are hereby informed that they may formally request a translation of the General Terms & Conditions into Hindi language if required. Such requests will be accommodated to the extent feasible, subject to the company’s standard procedures and timelines. In the event of any inconsistencies or ambiguities between the translated General Terms & Conditions and the English version, the English version shall prevail and be deemed authoritative.{'\n\n'}
-            I hereby confirm that I have read all the above-mentioned General Terms and Conditions of Mayur and Company, Chartered Accountants and agree and accept all the above-mentioned General Terms and Conditions of Mayur and Company, Chartered Accountants.</Text>
-          <View style={styles.signatureContainer} wrap={false}>
-            {/* Left Block - CA Mayur Gupta */}
-            <View style={styles.signatureBlock}>
-              <View style={{ borderTop: '1px solid #333', width: '100%', marginTop: 80, marginBottom: 10 }} />
-              <Text style={[styles.signatureLine, styles.bold]}>CA MAYUR GUPTA, FCA</Text>
-              <Text style={styles.signatureLine}>PROPRIETOR</Text>
-              <Text style={[styles.signatureLine, styles.bold]}>FOR MAYUR AND COMPANY</Text>
-              <Text style={styles.signatureLine}>CHARTERED ACCOUNTANTS</Text>
-              <Text style={styles.signatureLine}>DATE – {proposalDate}</Text>
-              <Text style={styles.signatureLine}>PLACE: DELHI</Text>
-            </View>
+            <Text style={styles.bold}>Note:</Text> Clients are hereby informed that they may formally request a translation of the General Terms & Conditions into Hindi language if required. Such requests will be accommodated to the extent feasible, subject to the company’s standard procedures and timelines. In the event of any inconsistencies or ambiguities between the translated General Terms & Conditions and the English version, the English version shall prevail and be deemed authoritative.{'\n\n'}</Text>
+            <Text style={styles.enclosureHindi}>
+            <Text style={styles.boldHindi}>नोट:</Text> ग्राहकों को एतद्द्वारा सूचित किया जाता है कि वे आवश्यकता होने पर सामान्य नियम और शर्तों के हिंदी अनुवाद के लिए औपचारिक रूप से अनुरोध कर सकते हैं। ऐसे अनुरोधों को कंपनी की मानक प्रक्रियाओं और समय-सीमाओं के अधीन, यथासंभव पूरा किया जाएगा। अनुवादित सामान्य नियम और शर्तों में किसी भी प्रकार की विसंगति होने की स्थिति में, अंग्रेजी संस्करण  ही सर्वोपरि माना जाएगा।</Text>
+            <Text style={styles.enclosure}>I hereby confirm that I have read all the above-mentioned General Terms and Conditions of Mayur and Company, Chartered Accountants and agree and accept all the above-mentioned General Terms and Conditions of Mayur and Company, Chartered Accountants.</Text>
 
+          <View style={styles.signatureContainer} wrap={false}>
             {/* Right Block - Client */}
             <View style={styles.signatureBlock}>
               <View style={{ borderTop: '1px solid #333', width: '100%', marginTop: 80, marginBottom: 10 }} />
