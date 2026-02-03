@@ -6,8 +6,8 @@ import path from "path";
 export default defineConfig({
     server: {
         host: "::",
-        port: 65432,
-	allowedHosts: ["mac.server"],
+        port: 12345,
+	allowedHosts: ["ca.mayur", "mac.server"],
         proxy: {
             "/api": {
                 target: "http://127.0.0.1:8000",

@@ -189,6 +189,13 @@ export const ServiceSelector = () => {
       setAllBillingCycles(prev => [...prev, service.billingCycle]);
     }
     setSelectedServices(prev => new Set(prev).add(service.id));
+
+    //sending custom new services over to csv database
+      const _ = fetch("/api/services", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(service),
+      });
   };
 
   const getCategorySelectionState = (category: string) => {

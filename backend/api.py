@@ -84,13 +84,14 @@ def get_services():
         if i != "id":
             columns_in_order.append(i)
     df = df[columns_in_order]
+    print("they asked for services and i gave them...")
     return df.to_dict(orient="records")
 
 
 @app.post("/api/services")
 def add_service(service: Service):
     df = pd.read_csv(csv_path)
-    new_id = f"{service.category[0:3].lower()}-{len(df) + 1}"
+    #new_id = f"{service.category[0:3].lower()}-{len(df) + 1}"
     new_service = {
         "category": service.category,
         "service": service.service,
@@ -100,6 +101,7 @@ def add_service(service: Service):
     }
     df = df._append(new_service, ignore_index=True)
     df.to_csv(csv_path, index=False)
+    print("should have updated the csv")
     return new_service
 
 
@@ -110,22 +112,21 @@ def build_proposal(payload: ProposalPayload):
     """
     services = []
     total = 0.0
+    df = pd.read_csv(csv_path)
 
     for svc in payload.services:
         final_price = svc.discountedPrice if svc.discountedPrice is not None else svc.price
         total += final_price
-        services.append(
-            {
-                "id": svc.id,
-                "category": svc.category,
-                "service": svc.service,
-                "billingCycle": svc.billingCycle,
-                "price": svc.price,
-                "scopeOfWork": svc.scopeOfWork,
-                "discountedPrice": svc.discountedPrice,
-                "finalPrice": final_price,
-            }
-        )
+        services.append({
+            "id": svc.id,
+            "category": svc.category,
+            "service": svc.service,
+            "billingCycle": svc.billingCycle,
+            "price": svc.price,
+            "scopeOfWork": svc.scopeOfWork,
+            "discountedPrice": svc.discountedPrice,
+            "finalPrice": final_price,
+        })
 
     normalized = {
         "client": payload.client.model_dump(),
