@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
     paddingTop: 50,
     paddingLeft: 50,
     paddingRight: 50,
-    paddingBottom: 80,
+    paddingBottom: 70,
     fontSize: 11,
     fontFamily: "HK Grotesk",
     color: "#1f2937",

@@ -1,6 +1,7 @@
 import fitz
 import os
 import subprocess
+import shutil
 
 def find_and_replace_text(input_pdf_path, output_pdf_path, client_details):
     doc = fitz.open(input_pdf_path)
@@ -180,8 +181,12 @@ def hex_to_rgb(hex_str):
     return tuple(int(h[i:i+2], 16)/255.0 for i in (0, 2, 4))
 
 def process_ghostscript(input_path, output_path):
+    gs_executable = shutil.which('gs')
+    if not gs_executable:
+        gs_executable = shutil.which('gswin64c')
+
     gs_command = [
-        'gs', '-q', '-dNOPAUSE', '-dBATCH', '-dSAFER',
+        gs_executable, '-q', '-dNOPAUSE', '-dBATCH', '-dSAFER',
         '-sDEVICE=pdfwrite', '-dNoOutputFonts',
         f'-sOutputFile={output_path}', input_path
     ]
