@@ -8,6 +8,8 @@ pnpm-debug.log*
 lerna-debug.log*
 
 backend/__pycache__
+public/services.csv
+
 
 node_modules
 dist
