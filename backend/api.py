@@ -1,9 +1,10 @@
 from typing import List, Optional
 import os
 import tempfile
+import subprocess
 import pandas as pd
 import uvicorn
-from fastapi import FastAPI, BackgroundTasks
+from fastapi import FastAPI, BackgroundTasks, UploadFile, File
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from pydantic import BaseModel
@@ -179,6 +180,75 @@ def prepare_proposal_letter(request: ClientInfo, background_tasks: BackgroundTas
         )
     except Exception as e:
         # Clean up temp file on error
+        if os.path.exists(output_path):
+            os.unlink(output_path)
+        raise e
+
+
+@app.post("/api/secure-pdf")
+async def make_pdf_secure(
+    pdf_file: UploadFile = File(...),
+    background_tasks: BackgroundTasks = None
+):
+    """
+    Process a PDF to make text unselectable by converting text to vector outlines using Ghostscript.
+    This prevents copy-paste of text from the PDF.
+    """
+    # Create temporary files for input and output
+    input_temp = tempfile.NamedTemporaryFile(delete=False, suffix=".pdf")
+    output_temp = tempfile.NamedTemporaryFile(delete=False, suffix=".pdf")
+    input_path = input_temp.name
+    output_path = output_temp.name
+    input_temp.close()
+    output_temp.close()
+    
+    try:
+        # Write uploaded PDF to temporary file
+        content = await pdf_file.read()
+        with open(input_path, 'wb') as f:
+            f.write(content)
+        
+        # Process with Ghostscript to convert text to outlines
+        gs_command = [
+            'gs',
+            '-q',                    # Quiet mode
+            '-dNOPAUSE',             # No pauses
+            '-dBATCH',               # Batch mode
+            '-dSAFER',               # Security
+            '-sDEVICE=pdfwrite',     # Output PDF
+            '-dNoOutputFonts',       # Key: Convert text to outlines (makes text unselectable)
+            f'-sOutputFile={output_path}',
+            input_path
+        ]
+        
+        result = subprocess.run(
+            gs_command,
+            capture_output=True,
+            text=True
+        )
+        
+        if result.returncode != 0:
+            raise Exception(f"Ghostscript processing failed: {result.stderr}")
+        
+        # Schedule cleanup of both temp files after response
+        if background_tasks:
+            background_tasks.add_task(cleanup_temp_file, input_path)
+            background_tasks.add_task(cleanup_temp_file, output_path)
+        
+        # Get original filename or use default
+        original_filename = pdf_file.filename or "document.pdf"
+        secure_filename = f"secure-{original_filename}"
+        
+        # Return the processed PDF
+        return FileResponse(
+            output_path,
+            media_type="application/pdf",
+            filename=secure_filename
+        )
+    except Exception as e:
+        # Clean up temp files on error
+        if os.path.exists(input_path):
+            os.unlink(input_path)
         if os.path.exists(output_path):
             os.unlink(output_path)
         raise e

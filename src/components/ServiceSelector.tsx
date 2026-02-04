@@ -191,11 +191,11 @@ export const ServiceSelector = () => {
     setSelectedServices(prev => new Set(prev).add(service.id));
 
     //sending custom new services over to csv database
-      const _ = fetch("/api/services", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(service),
-      });
+    const _ = fetch("/api/services", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(service),
+    });
   };
 
   const getCategorySelectionState = (category: string) => {
@@ -305,8 +305,24 @@ export const ServiceSelector = () => {
         };
       }
 
+      // Generate the initial PDF
       const blob = await pdf(<ProposalDocument data={normalized} advancedTermsAndConditions={advancedTermsAndConditions} />).toBlob();
-      const url = URL.createObjectURL(blob);
+
+      // Post-process with Ghostscript to make text unselectable
+      const formData = new FormData();
+      formData.append('pdf_file', blob, `proposal-${payload.proposal.date || "today"}.pdf`);
+
+      const secureResponse = await fetch("/api/secure-pdf", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (!secureResponse.ok) {
+        throw new Error("Failed to process PDF for security");
+      }
+
+      const secureBlob = await secureResponse.blob();
+      const url = URL.createObjectURL(secureBlob);
       const link = document.createElement("a");
       link.href = url;
       link.download = `proposal-${payload.proposal.date || "today"}.pdf`;
